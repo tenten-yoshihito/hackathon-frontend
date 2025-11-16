@@ -1,5 +1,9 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoginPage from "pages/LoginPage";
+// import { Home } from "pages/Home";
+// import { About } from "pages/About";
+// import { Contact } from "pages/Contact";
 
 function App() {
   return (
@@ -7,6 +11,7 @@ function App() {
       <h1>hello react router</h1>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
