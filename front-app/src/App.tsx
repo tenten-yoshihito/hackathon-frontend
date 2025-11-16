@@ -4,7 +4,7 @@ import LoginPage from "pages/LoginPage";
 // import { Home } from "pages/Home";
 // import { About } from "pages/About";
 // import { Contact } from "pages/Contact";
-
+// For simplicity, defining Home, About, Contact components here
 function App() {
   return (
     <BrowserRouter>
