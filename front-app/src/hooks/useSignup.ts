@@ -1,3 +1,5 @@
+// src/hooks/useSignup.ts
+
 import { useState, FormEvent } from "react";
 import { fireAuth } from 'lib/firebaseConfig';
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';

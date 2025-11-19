@@ -1,3 +1,5 @@
+// src/pages/SignUpPage.tsx
+
 import React from 'react';
 import { useSignup } from 'hooks/useSignup'; 
 import SignupForm from 'components/auth/SignupForm';

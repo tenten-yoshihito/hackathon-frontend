@@ -1,7 +1,7 @@
-import React, { FormEvent } from "react";
-// import "./styles.css"; // 必要に応じてスタイルをインポート
+//src/components/auth/SignUpForm.tsx
 
-// フックから受け取るPropsの型を定義
+import React, { FormEvent } from "react";
+
 interface Props {
     email: string;
     setEmail: (value: string) => void;
@@ -29,7 +29,7 @@ const SignupForm: React.FC<Props> = ({
                     value={email}
                     placeholder="Enter email"
                     onChange={(e) => setEmail(e.target.value)}
-                    disabled={isLoading} // ロード中は入力不可
+                    disabled={isLoading} 
                 />
             </div>
             password:
@@ -39,7 +39,7 @@ const SignupForm: React.FC<Props> = ({
                     value={password}
                     placeholder="Enter password"
                     onChange={(e) => setPassword(e.target.value)}
-                    disabled={isLoading} // ロード中は入力不可
+                    disabled={isLoading} 
                 />
             </div>
             <button type="submit" disabled={isLoading}>
