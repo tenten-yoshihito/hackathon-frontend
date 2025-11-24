@@ -11,6 +11,8 @@ const SignupPage: React.FC = () => {
         setEmail, 
         password, 
         setPassword, 
+        name,
+        setName,
         onSubmit,
         isLoading 
     } = useSignup();
@@ -22,6 +24,8 @@ const SignupPage: React.FC = () => {
                 setEmail={setEmail}
                 password={password}
                 setPassword={setPassword}
+                name={name}
+                setName={setName}
                 onSubmit={onSubmit}
                 isLoading={isLoading}
             />
