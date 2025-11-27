@@ -8,62 +8,51 @@ import {
   deleteUser,
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
+import { registerUserToBackend } from "lib/api";
 
 export const useSignup = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [name, setName] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true); // ロード開始
+    setIsLoading(true);
 
     try {
+      // Firebaseでユーザー作成
       const userCredential = await createUserWithEmailAndPassword(
         fireAuth,
         email,
         password
       );
       const user = userCredential.user;
-      //idTokenの取得
+
       try {
         const idToken = await user.getIdToken();
-        const res = await fetch("http://127.0.0.1:8000/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${idToken}`,
-          },
-          body: JSON.stringify({
-            // ※今はフォームがないので仮のデータを送ります
-            // 後で <input> を増やして state から取得するようにしましょう
-            name: "新規ユーザー",
-            age: 15,
-          }),
-        });
 
-        if (!res.ok) {
-          throw new Error("サーバーへの登録に失敗しました");
-        }
-        // メール認証の送信
-        await sendEmailVerification(userCredential.user);
+        // Goサーバーへ登録
+        await registerUserToBackend(idToken, name, email);
 
+        // 成功したらメール送信
+        await sendEmailVerification(user);
         alert("アカウント作成に成功しました！確認メールを送信しました。");
       } catch (apiError) {
+        // 失敗時のロールバック
         console.error("DB登録失敗。ロールバックします。", apiError);
-        // サーバー登録やメール送信に失敗した場合、作成したユーザーを削除
-        await deleteUser(userCredential.user);
-        throw apiError; // 外側のcatchへ
+        await deleteUser(user);
+        throw apiError;
       }
     } catch (err) {
-      // エラーハンドリングはここに残す
       console.error("サインアップエラー:", err);
       const message = err instanceof FirebaseError ? err.message : String(err);
-      alert(`アカウント作成に失敗しました: ${message}`);
+      alert(`登録できませんでした: ${message}`);
     } finally {
-      setIsLoading(false); // ロード終了
+      setIsLoading(false);
       setEmail("");
       setPassword("");
+      setName("");
     }
   };
 
@@ -72,6 +61,8 @@ export const useSignup = () => {
     setEmail,
     password,
     setPassword,
+    name,
+    setName,
     onSubmit,
     isLoading,
   };
