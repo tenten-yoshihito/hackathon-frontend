@@ -1,4 +1,4 @@
-//src/components/auth/LogOutbutton.tsx
+//src/components/auth/SignOutButton.tsx
 
 import React from "react";
 
@@ -8,8 +8,10 @@ type Props = {
 
 const SignOutButton: React.FC<Props> = ({ onSignOut }) => {
   return (
-    <div className="signout-button">
-      <button onClick={onSignOut}>ログアウト</button>
+    <div style={{ textAlign: "center", marginTop: "20px" }}>
+      <button onClick={onSignOut} className="text-button">
+        ログアウト
+      </button>
     </div>
   );
 };

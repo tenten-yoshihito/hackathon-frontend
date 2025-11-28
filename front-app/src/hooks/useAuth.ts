@@ -9,7 +9,7 @@ import {
   User,
 } from "firebase/auth";
 import { fireAuth } from "lib/firebaseConfig";
-import { registerUserToBackend } from "lib/api";
+import { registerUserToBackend } from "lib/api/user_register";
 
 export const useAuth = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);

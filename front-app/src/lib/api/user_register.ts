@@ -1,4 +1,5 @@
-// src/lib/api.ts
+// src/lib/user_register.ts
+import { getBaseUrl } from "./client";
 
 export const registerUserToBackend = async (
   token: string,
@@ -6,9 +7,7 @@ export const registerUserToBackend = async (
   email: string,
   iconUrl: string = ""
 ) => {
-  const baseUrl = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
-
-  const res = await fetch(`${baseUrl}/register`, {
+  const res = await fetch(`${getBaseUrl()}/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

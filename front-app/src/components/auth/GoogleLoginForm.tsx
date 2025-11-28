@@ -8,9 +8,9 @@ type Props = {
 
 const GoogleLoginForm: React.FC<Props> = ({ onGoogleLogin }) => {
   return (
-    <div className="login-form">
-      <button onClick={onGoogleLogin}>Googleでログイン</button>
-    </div>
+    <button onClick={onGoogleLogin} className="secondary-button" type="button">
+      Googleでログイン
+    </button>
   );
 };
 
