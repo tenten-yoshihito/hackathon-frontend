@@ -8,7 +8,7 @@ import {
   deleteUser,
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
-import { registerUserToBackend } from "lib/api";
+import { registerUserToBackend } from "lib/api/user_register";
 
 export const useSignup = () => {
   const [email, setEmail] = useState<string>("");

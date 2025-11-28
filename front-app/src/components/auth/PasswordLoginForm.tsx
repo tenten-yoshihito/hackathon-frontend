@@ -13,35 +13,42 @@ const PasswordLoginForm: React.FC<Props> = ({ onSubmit }) => {
   const onLoginSubmit = (e: FormEvent) => {
     e.preventDefault();
     onSubmit(email, password);
-    setEmail("");
+    // setEmail("");
     setPassword("");
   };
 
   return (
-    <div className="login-form">
-      <form onSubmit={onLoginSubmit}>
-        email:
-        <div>
-          <input
-            type="email"
-            value={email}
-            placeholder="Enter email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        password:
-        <div>
-          <input
-            type="password"
-            value={password}
-            placeholder="Enter password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
-    </div>
+    <form onSubmit={onLoginSubmit}>
+      <div className="form-group">
+        <label className="form-label">メールアドレス</label>
+        <input
+          type="email"
+          className="form-input"
+          value={email}
+          placeholder="email@example.com"
+          autoComplete="email"
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+      </div>
+
+      <div className="form-group">
+        <label className="form-label">パスワード</label>
+        <input
+          type="password"
+          className="form-input"
+          value={password}
+          placeholder="パスワードを入力"
+          autoComplete="current-password"
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+      </div>
+
+      <button type="submit" className="primary-button">
+        ログイン
+      </button>
+    </form>
   );
 };
-
 export default PasswordLoginForm;
