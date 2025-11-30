@@ -51,7 +51,7 @@ export const useAuth = () => {
           user.photoURL || ""
         );
       } catch (apiError) {
-        // 既に登録済みの場合などでエラーになっても、ログイン自体は成功させる
+        // 既に登録済みの場合などでエラーになっても、ログイン自体は成功させる(余裕があれば修正)
         console.warn("バックエンド同期スキップ(または登録済):", apiError);
       }
 

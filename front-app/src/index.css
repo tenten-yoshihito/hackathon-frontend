@@ -33,6 +33,23 @@ body {
   font-weight: bold;
 }
 
+
+/* ホーム画面用：少し広めのコンテナ */
+.container-lg {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--bg-color);
+  min-height: 100vh;
+}
+
+/* 商品がない時のメッセージ */
+.empty-message {
+  text-align: center;
+  margin-top: 50px;
+  color: #888;
+}
+
 /* --- 共通コンポーネント --- */
 
 /* 赤いメインボタン */

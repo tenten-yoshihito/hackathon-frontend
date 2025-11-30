@@ -1,4 +1,5 @@
 // src/lib/user_register.ts
+
 import { getBaseUrl } from "./client";
 
 export const registerUserToBackend = async (

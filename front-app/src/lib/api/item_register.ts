@@ -1,4 +1,4 @@
-// src/lib/api/item.ts
+// src/lib/api/item_register.ts
 
 import { getBaseUrl } from "./client";
 

@@ -5,7 +5,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "pages/LoginPage";
 import SignupPage from "pages/SignupPage";
 import ItemCreatePage from "pages/ItemCreatePage";
-
+import Home from "pages/Home";
+import { AuthGuard } from "components/auth/AuthGuard";
 function App() {
   return (
     <BrowserRouter>
@@ -14,14 +15,17 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="/items/create" element={<ItemCreatePage />} />
+        <Route
+          path="/sell"
+          element={
+            <AuthGuard>
+              <ItemCreatePage />
+            </AuthGuard>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
-}
-
-function Home() {
-  return <h2>home</h2>;
 }
 
 export default App;
