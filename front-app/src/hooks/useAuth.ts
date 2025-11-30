@@ -1,18 +1,29 @@
 // src/hooks/useAuth.ts
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   signInWithEmailAndPassword,
   signOut,
   signInWithPopup,
   GoogleAuthProvider,
   User,
+  onAuthStateChanged,
 } from "firebase/auth";
 import { fireAuth } from "lib/firebaseConfig";
 import { registerUserToBackend } from "lib/api/user_register";
 
 export const useAuth = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(fireAuth, (user) => {
+      setCurrentUser(user);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   // Eメール・パスワードログイン
   const handlePasswordLogin = async (email: string, password: string) => {
@@ -77,6 +88,7 @@ export const useAuth = () => {
 
   return {
     currentUser,
+    loading,
     handlePasswordLogin,
     handleGoogleLogin,
     handleSignOut,

@@ -10,18 +10,13 @@ const SignupPage: React.FC = () => {
 
   return (
     <div className="container-sm">
-      {/* フォーム本体 */}
       <SignupForm {...signupProps} />
-
-      {/* ログインへのリンク */}
-      <div className="center-box">
-        <p className="helper-text">
-          すでにアカウントをお持ちの方は
-          <br />
-          <Link to="/login" className="text-link">
-            ログインはこちら
-          </Link>
-        </p>
+      <div className="center-text">
+        すでにアカウントをお持ちの方は
+        <br />
+        <Link to="/login" className="text-link">
+          ログインはこちら
+        </Link>
       </div>
     </div>
   );

@@ -25,7 +25,9 @@ const Home: React.FC = () => {
 
   return (
     <div className="container-lg">
-      <h2 className="page-title">新着商品</h2>
+      <h2 className="page-title text-left">
+        新着商品
+      </h2>
       {loading ? (
         <p style={{ textAlign: "center" }}>読み込み中...</p>
       ) : (

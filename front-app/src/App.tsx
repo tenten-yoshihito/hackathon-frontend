@@ -6,11 +6,12 @@ import LoginPage from "pages/LoginPage";
 import SignupPage from "pages/SignupPage";
 import ItemCreatePage from "pages/ItemCreatePage";
 import Home from "pages/Home";
+import Header from "components/common/Header";
 import { AuthGuard } from "components/auth/AuthGuard";
 function App() {
   return (
     <BrowserRouter>
-      <h1>uttc</h1>
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />

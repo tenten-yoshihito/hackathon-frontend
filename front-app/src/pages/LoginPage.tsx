@@ -14,32 +14,24 @@ const LoginPage: React.FC = () => {
   return (
     <div className="container-sm">
       <h2 className="page-title">ログイン</h2>
-
-      {/* ログインフォーム */}
       <PasswordLoginForm onSubmit={handlePasswordLogin} />
 
-      {/* 区切り線 */}
       <div className="divider-container">
         <div className="divider-line"></div>
         <span className="divider-text">または</span>
         <div className="divider-line"></div>
       </div>
 
-      {/* Googleログイン */}
       <GoogleLoginForm onGoogleLogin={handleGoogleLogin} />
 
-      {/* 新規登録リンク */}
       <div className="center-text">
-        <p className="helper-text">
-          アカウントをお持ちでない方は
-          <br />
-          <Link to="/signup" className="text-link">
-            新規会員登録はこちら
-          </Link>
-        </p>
+        アカウントをお持ちでない方は
+        <br />
+        <Link to="/signup" className="text-link">
+          新規会員登録はこちら
+        </Link>
       </div>
 
-      {/* ログイン中ならログアウトボタンを表示 */}
       {currentUser && <SignOutButton onSignOut={handleSignOut} />}
     </div>
   );
