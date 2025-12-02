@@ -7,7 +7,9 @@ import SignupPage from "pages/SignupPage";
 import ItemCreatePage from "pages/ItemCreatePage";
 import Home from "pages/Home";
 import Header from "components/common/Header";
+import ItemDetailPage from "pages/ItemDetailPage";
 import { AuthGuard } from "components/auth/AuthGuard";
+
 function App() {
   return (
     <BrowserRouter>
@@ -24,6 +26,7 @@ function App() {
             </AuthGuard>
           }
         />
+        <Route path="/items/:id" element={<ItemDetailPage />} />
       </Routes>
     </BrowserRouter>
   );

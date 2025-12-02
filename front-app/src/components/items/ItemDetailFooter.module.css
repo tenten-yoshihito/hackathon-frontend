@@ -1,0 +1,23 @@
+/* src/components/items/ItemDetailFooter.module.css */
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  padding: 16px 20px;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  z-index: 100;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center; /* コンテンツを中央に */
+}
+
+.content {
+  width: 100%;
+  max-width: 1000px; /* PC表示時に広がりすぎないように */
+  display: flex;
+  gap: 12px;
+}

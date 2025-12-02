@@ -11,10 +11,12 @@ import {
 } from "firebase/auth";
 import { fireAuth } from "lib/firebaseConfig";
 import { registerUserToBackend } from "lib/api/user_register";
+import { useNavigate } from "react-router-dom";
 
 export const useAuth = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(fireAuth, (user) => {
@@ -35,6 +37,8 @@ export const useAuth = () => {
       );
       setCurrentUser(userCredential.user);
       alert("ログイン成功: " + userCredential.user.email);
+      //ログイン後ホームへ遷移
+      navigate("/");
     } catch (err) {
       console.error("ログインエラー:", err);
       const message = err instanceof Error ? err.message : String(err);
@@ -68,6 +72,8 @@ export const useAuth = () => {
 
       setCurrentUser(res.user);
       alert("ログインユーザー: " + res.user.displayName);
+      //ログイン後ホームへ遷移
+      navigate("/");
     } catch (err) {
       console.error("Googleログインエラー:", err);
       const message = err instanceof Error ? err.message : String(err);
