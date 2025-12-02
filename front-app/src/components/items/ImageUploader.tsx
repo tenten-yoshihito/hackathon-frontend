@@ -28,7 +28,7 @@ const ImageUploader: React.FC<Props> = ({ onImageChange, previews }) => {
       {/* プレビュー表示エリア */}
       <div className={styles.previewGrid}>
         {previews.length === 0 && (
-          <span style={{ color: "#888", fontSize: "12px" }}>
+          <span className={styles.noImageText}>
             画像はまだありません
           </span>
         )}
