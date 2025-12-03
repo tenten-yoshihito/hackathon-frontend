@@ -25,6 +25,7 @@ const ItemGrid: React.FC<Props> = ({ items }) => {
           <div className={styles.card}>
             {/* 画像エリア */}
             <div className={styles.imageWrapper}>
+              {item.status === "SOLD" && <div className="sold-badge">SOLD</div>}
               {item.image_url ? (
                 <img
                   src={item.image_url}

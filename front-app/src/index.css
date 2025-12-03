@@ -200,4 +200,18 @@ body {
   min-height: 120px;
 }
 
+/* --- SOLD Badge --- */
+.sold-badge {
+  position: absolute;
+  top: 20px;
+  left: -10px;
+  background-color: #e33e3e;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  padding: 8px 40px;
+  transform: rotate(-15deg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
 
