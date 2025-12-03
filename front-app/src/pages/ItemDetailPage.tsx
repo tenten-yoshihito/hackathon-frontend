@@ -1,7 +1,7 @@
 // src/pages/ItemDetailPage.tsx
 
 import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useItemDetail } from "hooks/useItemDetail";
 import { purchaseItem } from "lib/api/purchase";
 
@@ -15,7 +15,6 @@ import styles from "./ItemDetailPage.module.css";
 
 const ItemDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
 
   // ロジックはフックに任せる
   const { item, loading, error, refetch } = useItemDetail(id);
