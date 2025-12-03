@@ -29,7 +29,7 @@ const Home: React.FC = () => {
         新着商品
       </h2>
       {loading ? (
-        <p style={{ textAlign: "center" }}>読み込み中...</p>
+        <p className="center-text">読み込み中...</p>
       ) : (
         <ItemGrid items={items} />
       )}

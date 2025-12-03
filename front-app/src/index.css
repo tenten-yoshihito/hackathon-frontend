@@ -200,41 +200,4 @@ body {
   min-height: 120px;
 }
 
-/* --- ヘッダー --- */
-.header {
-  height: 64px;
-  padding: 0 20px;
-  background-color: #fff;
-  border-bottom: 1px solid #eee;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 
-  /* スクロールしても上部に固定 */
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.header-logo {
-  text-decoration: none;
-  color: var(--text-color);
-  font-weight: bold;
-  font-size: 24px;
-  font-family: sans-serif;
-}
-
-.header-nav {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-/* ヘッダー内のボタン用 (幅を固定せず、中身に合わせる) */
-.header-button {
-  width: auto; /* 幅いっぱい(100%)を解除 */
-  margin-top: 0; /* デフォルトのマージンを削除 */
-  padding: 8px 16px;
-  font-size: 14px;
-  white-space: nowrap; /* 文字を折り返さない */
-}

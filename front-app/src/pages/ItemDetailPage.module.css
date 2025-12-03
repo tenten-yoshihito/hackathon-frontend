@@ -1,5 +1,10 @@
 /* src/pages/ItemDetailPage.module.css */
 
+.container {
+  background-color: #fff;
+  min-height: 100vh;
+}
+
 .spacer {
   height: 100px; /* フッター分の余白 */
 }

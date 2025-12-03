@@ -7,15 +7,13 @@ const ItemDetailFooter: React.FC = () => {
     <div className={styles.footer}>
       <div className={styles.content}>
         <button
-          className="secondary-button"
-          style={{ flex: 1 }}
+          className={`secondary-button ${styles.commentButton}`}
           onClick={() => alert("チャット機能へ")}
         >
           コメント
         </button>
         <button
-          className="primary-button"
-          style={{ marginTop: 0, flex: 2 }}
+          className={`primary-button ${styles.purchaseButton}`}
           onClick={() => alert("購入機能へ")}
         >
           購入手続きへ

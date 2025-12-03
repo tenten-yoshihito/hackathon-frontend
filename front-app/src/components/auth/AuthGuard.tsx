@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { fireAuth } from "lib/firebaseConfig";
+import styles from "./AuthGuard.module.css";
 
 type Props = {
   children: React.ReactNode;
@@ -28,7 +29,7 @@ export const AuthGuard: React.FC<Props> = ({ children }) => {
 
   if (loading) {
     return (
-      <div style={{ textAlign: "center", marginTop: "100px" }}>
+      <div className={styles.loadingContainer}>
         読み込み中...
       </div>
     );

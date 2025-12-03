@@ -42,3 +42,8 @@
   border-radius: 4px;
   border: 1px solid #eee;
 }
+
+.noImageText {
+  color: #888;
+  font-size: 12px;
+}

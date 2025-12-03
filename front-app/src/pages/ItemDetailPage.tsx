@@ -23,8 +23,7 @@ const ItemDetailPage: React.FC = () => {
 
   return (
     <div
-      className="container-lg"
-      style={{ backgroundColor: "#fff", minHeight: "100vh" }}
+      className={`container-lg ${styles.container}`}
     >
       {/* 2カラムレイアウト (PC時) */}
       <div className={styles.contentWrapper}>
