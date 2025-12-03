@@ -1,8 +1,12 @@
 import React from "react";
 import styles from "./ItemDetailFooter.module.css";
 
-// 将来的には onBuy などの関数をPropsで受け取る
-const ItemDetailFooter: React.FC = () => {
+interface Props {
+  onPurchaseClick?: () => void;
+  isSold?: boolean;
+}
+
+const ItemDetailFooter: React.FC<Props> = ({ onPurchaseClick, isSold = false }) => {
   return (
     <div className={styles.footer}>
       <div className={styles.content}>
@@ -14,9 +18,10 @@ const ItemDetailFooter: React.FC = () => {
         </button>
         <button
           className={`primary-button ${styles.purchaseButton}`}
-          onClick={() => alert("購入機能へ")}
+          onClick={onPurchaseClick || (() => alert("購入機能へ"))}
+          disabled={isSold}
         >
-          購入手続きへ
+          {isSold ? "売り切れ" : "購入手続きへ"}
         </button>
       </div>
     </div>

@@ -28,6 +28,7 @@
 }
 
 .imageWrapper {
+  position: relative;
   width: 100%;
   aspect-ratio: 1 / 1; /* 正方形に固定 */
   background-color: #f0f0f0;

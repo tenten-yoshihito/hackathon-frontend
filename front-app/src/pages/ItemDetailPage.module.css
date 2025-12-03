@@ -5,6 +5,10 @@
   min-height: 100vh;
 }
 
+.imageWrapper {
+  position: relative;
+}
+
 .spacer {
   height: 100px; /* フッター分の余白 */
 }

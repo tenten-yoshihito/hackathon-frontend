@@ -8,6 +8,7 @@ export interface ItemSimple {
   name: string;
   price: number;
   image_url: string;
+  status: string;
 }
 
 export const getItemList = async (): Promise<ItemSimple[]> => {

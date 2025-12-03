@@ -23,4 +23,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const fireAuth = getAuth(app);
 export const fireStorage = getStorage(app);
+
+/**
+ * Get ID token for authenticated user
+ * @throws Error if user is not authenticated
+ */
+export const getIdToken = async (): Promise<string> => {
+  const user = fireAuth.currentUser;
+  if (!user) {
+    throw new Error("認証が必要です");
+  }
+  return user.getIdToken();
+};
+
 export default app;
+
