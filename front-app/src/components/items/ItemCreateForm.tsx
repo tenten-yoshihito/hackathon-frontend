@@ -12,6 +12,7 @@ interface Props {
   setDescription: (v: string) => void;
   previews: string[];
   handleImageChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleImageRemove: (index: number) => void;
   onSubmit: (e: FormEvent) => void;
   isLoading: boolean;
 }
@@ -24,6 +25,7 @@ const ItemCreateForm: React.FC<Props> = (props) => {
       {/* 画像アップロード部品 */}
       <ImageUploader
         onImageChange={props.handleImageChange}
+        onImageRemove={props.handleImageRemove}
         previews={props.previews}
       />
 

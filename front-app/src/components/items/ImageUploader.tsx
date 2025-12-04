@@ -5,10 +5,11 @@ import styles from "./ImageUploader.module.css";
 
 interface Props {
   onImageChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onImageRemove: (index: number) => void;
   previews: string[];
 }
 
-const ImageUploader: React.FC<Props> = ({ onImageChange, previews }) => {
+const ImageUploader: React.FC<Props> = ({ onImageChange, onImageRemove, previews }) => {
   return (
     <div className={styles.container}>
       <p className="form-label">商品画像 (複数選択可)</p>
@@ -34,12 +35,21 @@ const ImageUploader: React.FC<Props> = ({ onImageChange, previews }) => {
         )}
 
         {previews.map((src, index) => (
-          <img
-            key={index}
-            src={src}
-            alt={`preview-${index}`}
-            className={styles.previewImage}
-          />
+          <div key={index} className={styles.previewWrapper}>
+            <img
+              src={src}
+              alt={`preview-${index}`}
+              className={styles.previewImage}
+            />
+            <button
+              type="button"
+              className={styles.removeButton}
+              onClick={() => onImageRemove(index)}
+              aria-label="画像を削除"
+            >
+              ×
+            </button>
+          </div>
         ))}
       </div>
     </div>

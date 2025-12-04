@@ -26,10 +26,19 @@ export const useItemCreate = () => {
       const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
       setPreviews((prev) => [...prev, ...newPreviews]);
 
-      // 💡 重要: inputの値をリセットする
-      // これをしないと、同じファイルを連続で選んだ時に反応しなくなります
+      // inputの値をリセットする
       e.target.value = "";
     }
+  };
+
+  // 画像を削除する処理
+  const handleImageRemove = (index: number) => {
+    // プレビューURLをクリーンアップ
+    URL.revokeObjectURL(previews[index]);
+    
+    // 指定されたindexの画像を削除
+    setImages((prev) => prev.filter((_, i) => i !== index));
+    setPreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
   const onSubmit = async (e: FormEvent) => {
@@ -43,10 +52,8 @@ export const useItemCreate = () => {
       const token = await user.getIdToken();
 
       // 画像をFirebase StorageにアップロードしてURLを取得 
-      // Promise.allを使って並列でアップロードします
       const imageUrls = await Promise.all(
         images.map(async (file) => {
-          // ファイル名が被らないようにランダムな文字列や時間を付与
           const fileName = `${Date.now()}_${file.name}`;
           const storageRef = ref(fireStorage, `items/${user.uid}/${fileName}`);
 
@@ -83,6 +90,7 @@ export const useItemCreate = () => {
     images,
     previews,
     handleImageChange,
+    handleImageRemove,
     onSubmit,
     isLoading,
   };
