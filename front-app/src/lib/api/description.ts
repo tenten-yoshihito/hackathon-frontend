@@ -1,13 +1,12 @@
 // src/lib/api/description.ts
 
 import { getIdToken } from "../firebaseConfig";
-
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:8000";
+import { getBaseUrl } from "./client";
 
 export const generateDescription = async (imageURL: string): Promise<string> => {
   const token = await getIdToken();
   
-  const response = await fetch(`${API_BASE_URL}/items/generate-description`, {
+  const response = await fetch(`${getBaseUrl()}/items/generate-description`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
