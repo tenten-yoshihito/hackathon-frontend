@@ -4,6 +4,7 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import { fireAuth, fireStorage } from "lib/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { createItemInBackend } from "lib/api/item_register";
+import { generateDescription } from "lib/api/description";
 import { useNavigate } from "react-router-dom";
 
 export const useItemCreate = () => {
@@ -13,6 +14,7 @@ export const useItemCreate = () => {
   const [images, setImages] = useState<File[]>([]); 
   const [previews, setPreviews] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
   const navigate = useNavigate();
 
   // 画像が選択されたときの処理
@@ -39,6 +41,37 @@ export const useItemCreate = () => {
     // 指定されたindexの画像を削除
     setImages((prev) => prev.filter((_, i) => i !== index));
     setPreviews((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  // AIで説明を自動生成
+  const handleGenerateDescription = async () => {
+    if (images.length === 0) {
+      alert("画像を先にアップロードしてください");
+      return;
+    }
+
+    setIsGenerating(true);
+    try {
+      const user = fireAuth.currentUser;
+      if (!user) throw new Error("ログインしていません");
+
+      // 最初の画像をFirebase Storageにアップロード
+      const file = images[0];
+      const fileName = `${Date.now()}_${file.name}`;
+      const storageRef = ref(fireStorage, `items/${user.uid}/${fileName}`);
+      
+      await uploadBytes(storageRef, file);
+      const imageURL = await getDownloadURL(storageRef);
+
+      // Gemini APIで説明を生成
+      const generatedDescription = await generateDescription(imageURL);
+      setDescription(generatedDescription);
+    } catch (err: any) {
+      console.error(err);
+      alert(err.message || "説明の生成に失敗しました");
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   const onSubmit = async (e: FormEvent) => {
@@ -91,7 +124,9 @@ export const useItemCreate = () => {
     previews,
     handleImageChange,
     handleImageRemove,
+    handleGenerateDescription,
     onSubmit,
     isLoading,
+    isGenerating,
   };
 };

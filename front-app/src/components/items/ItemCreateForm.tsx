@@ -13,8 +13,10 @@ interface Props {
   previews: string[];
   handleImageChange: (e: ChangeEvent<HTMLInputElement>) => void;
   handleImageRemove: (index: number) => void;
+  handleGenerateDescription: () => void;
   onSubmit: (e: FormEvent) => void;
   isLoading: boolean;
+  isGenerating: boolean;
 }
 
 const ItemCreateForm: React.FC<Props> = (props) => {
@@ -54,7 +56,18 @@ const ItemCreateForm: React.FC<Props> = (props) => {
       </div>
 
       <div className="form-group">
-        <label className="form-label">商品の説明 (任意)</label>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <label className="form-label">商品の説明 (任意)</label>
+          <button
+            type="button"
+            onClick={props.handleGenerateDescription}
+            disabled={props.isGenerating || props.previews.length === 0}
+            className="secondary-button"
+            style={{ marginTop: 0, fontSize: "14px", padding: "8px 16px" }}
+          >
+            {props.isGenerating ? "生成中..." : "✨ AIで説明を自動生成"}
+          </button>
+        </div>
         <textarea
           className="form-textarea"
           value={props.description}
@@ -65,10 +78,10 @@ const ItemCreateForm: React.FC<Props> = (props) => {
 
       <button
         type="submit"
-        disabled={props.isLoading}
+        disabled={props.isLoading || props.isGenerating}
         className="primary-button"
       >
-        {props.isLoading ? "出品中..." : "出品する"}
+        {props.isLoading ? "出品中..." : props.isGenerating ? "生成中..." : "出品する"}
       </button>
     </form>
   );
