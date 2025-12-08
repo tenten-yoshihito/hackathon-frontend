@@ -24,7 +24,7 @@
 
 .divider {
   border: none;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--border-color-light);
   margin: 24px 0;
 }
 

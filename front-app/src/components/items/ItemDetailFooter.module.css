@@ -4,7 +4,7 @@
   left: 0;
   width: 100%;
   background-color: #fff;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--border-color-light);
   padding: 16px 0;
   z-index: 10;
 }

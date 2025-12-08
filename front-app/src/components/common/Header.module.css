@@ -2,7 +2,7 @@
   height: var(--header-height);
   padding: 0 20px;
   background-color: #fff;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--border-color-light);
   display: flex;
   justify-content: space-between;
   align-items: center;
