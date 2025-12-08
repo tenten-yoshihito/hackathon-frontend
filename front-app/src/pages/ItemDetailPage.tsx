@@ -1,11 +1,12 @@
 // src/pages/ItemDetailPage.tsx
 
-import React, { useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { useItemDetail } from "hooks/useItemDetail";
-import { purchaseItem } from "lib/api/purchase";
+import { useItemPurchase } from "hooks/useItemPurchase";
+import { fireAuth } from "lib/firebaseConfig";
 
-// 🧩 部品たち
+//  部品
 import ImageCarousel from "components/items/ImageCarousel";
 import ItemDescription from "components/items/ItemDescription";
 import ItemDetailFooter from "components/items/ItemDetailFooter";
@@ -15,31 +16,17 @@ import styles from "./ItemDetailPage.module.css";
 
 const ItemDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-
-  // ロジックはフックに任せる
   const { item, loading, error, refetch } = useItemDetail(id);
   
-  const [showModal, setShowModal] = useState(false);
-  const [purchasing, setPurchasing] = useState(false);
+  // 購入ロジックをカスタムフックに委譲
+  const purchase = useItemPurchase({ item, refetch });
 
-  const handlePurchaseClick = () => {
-    setShowModal(true);
-  };
+  // 現在のユーザーと商品の出品者を比較
+  const currentUser = fireAuth.currentUser;
+  const isOwnItem = item ? item.user_id === currentUser?.uid : false;
 
-  const handleConfirmPurchase = async () => {
-    if (!item) return;
-    
-    setPurchasing(true);
-    try {
-      await purchaseItem(item.id);
-      alert("購入が完了しました!");
-      refetch(); // 商品情報を再取得してSOLD表示を更新
-      setShowModal(false);
-    } catch (err: any) {
-      alert(err.message || "購入に失敗しました");
-    } finally {
-      setPurchasing(false);
-    }
+  const handleEditClick = () => {
+    alert("編集機能は後で実装します");
   };
 
   if (loading) return <p className="center-text">読み込み中...</p>;
@@ -49,9 +36,7 @@ const ItemDetailPage: React.FC = () => {
   const isSold = item.status === "SOLD";
 
   return (
-    <div
-      className={`container-lg ${styles.container}`}
-    >
+    <div className={`container-lg ${styles.container}`}>
       {/* 2カラムレイアウト (PC時) */}
       <div className={styles.contentWrapper}>
         {/* 左: 画像 */}
@@ -65,25 +50,25 @@ const ItemDetailPage: React.FC = () => {
         {/* 右: 説明 */}
         <div className={styles.infoSection}>
           <ItemDescription item={item} />
-
-          {/* フッターに隠れないための余白 */}
           <div className={styles.spacer} />
         </div>
       </div>
 
       {/* 下: フッター */}
       <ItemDetailFooter 
-        onPurchaseClick={handlePurchaseClick}
+        onPurchaseClick={purchase.handlePurchaseClick}
+        onEditClick={handleEditClick}
         isSold={isSold}
+        isOwnItem={isOwnItem}
       />
 
       {/* 購入確認モーダル */}
-      {showModal && item && (
+      {purchase.showModal && item && (
         <PurchaseModal
           item={item}
-          onConfirm={handleConfirmPurchase}
-          onCancel={() => setShowModal(false)}
-          isLoading={purchasing}
+          onConfirm={purchase.handleConfirmPurchase}
+          onCancel={purchase.closeModal}
+          isLoading={purchase.purchasing}
         />
       )}
     </div>
