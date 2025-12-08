@@ -4,6 +4,7 @@ import styles from "./ItemDetailFooter.module.css";
 interface Props {
   onPurchaseClick?: () => void;
   onEditClick?: () => void;
+  onCommentClick?: () => void;
   isSold?: boolean;
   isOwnItem?: boolean;
 }
@@ -11,17 +12,18 @@ interface Props {
 const ItemDetailFooter: React.FC<Props> = ({
   onPurchaseClick,
   onEditClick,
+  onCommentClick,
   isSold = false,
-  isOwnItem = false
+  isOwnItem = false,
 }) => {
-  // 自分の商品の場合はコメント + 編集ボタン
+  // 自分の商品の場合は編集 + コメントボタン
   if (isOwnItem) {
     return (
       <div className={styles.footer}>
         <div className={styles.content}>
           <button
             className={`secondary-button ${styles.commentButton}`}
-            onClick={() => alert("チャット機能へ")}
+            onClick={onCommentClick || (() => alert("チャット機能へ"))}
           >
             コメント
           </button>
@@ -37,13 +39,13 @@ const ItemDetailFooter: React.FC<Props> = ({
     );
   }
 
-  // 他人の商品の場合は従来通り
+  // 他人の商品の場合はコメント + 購入ボタン
   return (
     <div className={styles.footer}>
       <div className={styles.content}>
         <button
           className={`secondary-button ${styles.commentButton}`}
-          onClick={() => alert("チャット機能へ")}
+          onClick={onCommentClick || (() => alert("チャット機能へ"))}
         >
           コメント
         </button>
