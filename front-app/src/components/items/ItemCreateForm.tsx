@@ -93,7 +93,7 @@ const ItemCreateForm: React.FC<Props> = ({
       <button
         type="submit"
         disabled={props.isLoading || props.isGenerating}
-        className="primary-button"
+        className="primary-button w-full mt-24"
       >
         {props.isLoading ? loadingText : props.isGenerating ? "生成中..." : buttonText}
       </button>

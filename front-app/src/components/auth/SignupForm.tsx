@@ -66,7 +66,7 @@ const SignupForm: React.FC<Props> = ({
         />
       </div>
 
-      <button type="submit" disabled={isLoading} className="primary-button">
+      <button type="submit" disabled={isLoading} className="primary-button w-full mt-24">
         {isLoading ? "登録中..." : "アカウント作成"}
       </button>
     </form>

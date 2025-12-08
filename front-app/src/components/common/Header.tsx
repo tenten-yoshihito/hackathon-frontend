@@ -32,7 +32,7 @@ const Header: React.FC = () => {
             /* ログイン中 */
             <button
               onClick={onLogout}
-              className={`text-button ${styles.logoutButton}`}
+              className="text-button"
             >
               ログアウト
             </button>

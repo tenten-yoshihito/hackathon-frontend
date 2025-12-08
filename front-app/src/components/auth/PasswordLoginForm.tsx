@@ -45,7 +45,7 @@ const PasswordLoginForm: React.FC<Props> = ({ onSubmit }) => {
         />
       </div>
 
-      <button type="submit" className="primary-button">
+      <button type="submit" className="primary-button w-full mt-24">
         ログイン
       </button>
     </form>

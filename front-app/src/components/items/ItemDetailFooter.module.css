@@ -10,7 +10,7 @@
 }
 
 .content {
-  max-width: 1000px;
+  max-width: var(--container-width-lg);
   margin: 0 auto;
   padding: 0 20px;
   display: flex;
@@ -22,11 +22,9 @@
 }
 
 .purchaseButton {
-  margin-top: 0;
   flex: 2;
 }
 
 .editButton {
-  margin-top: 0;
   flex: 2;
 }

@@ -1,5 +1,5 @@
 .header {
-  height: 64px;
+  height: var(--header-height);
   padding: 0 20px;
   background-color: #fff;
   border-bottom: 1px solid #eee;
@@ -27,15 +27,8 @@
   gap: 12px;
 }
 
-/* ヘッダー内のボタン用 (幅を固定せず、中身に合わせる) */
+/* ヘッダー内のボタン用 */
 .button {
-  width: auto; /* 幅いっぱい(100%)を解除 */
-  margin-top: 0; /* デフォルトのマージンを削除 */
   padding: 8px 16px;
   font-size: 14px;
-  white-space: nowrap; /* 文字を折り返さない */
-}
-
-.logoutButton {
-  margin: 0;
 }

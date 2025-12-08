@@ -15,7 +15,7 @@ const ItemEditPage: React.FC = () => {
   
   if (error || !item) {
     return (
-      <div className={styles.errorContainer}>
+      <div className={`container-sm ${styles.errorContent}`}>
         <p className={styles.errorMessage}>商品が見つかりません</p>
       </div>
     );
@@ -24,10 +24,10 @@ const ItemEditPage: React.FC = () => {
   // 売却済みの商品は編集不可
   if (item.status === "SOLD") {
     return (
-      <div className={styles.errorContainer}>
+      <div className={`container-sm ${styles.errorContent}`}>
         <p className={styles.errorMessage}>売却済みの商品は編集できません</p>
         <button 
-          className={`secondary-button ${styles.backButton}`}
+          className={`secondary-button w-full ${styles.backButton}`}
           onClick={() => navigate(`/items/${id}`)}
         >
           商品詳細に戻る
