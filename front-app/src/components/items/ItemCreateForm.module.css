@@ -1,0 +1,13 @@
+/* src/components/items/ItemCreateForm.module.css */
+
+.labelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.generateButton {
+  margin-top: 0;
+  font-size: 14px;
+  padding: 8px 16px;
+}
