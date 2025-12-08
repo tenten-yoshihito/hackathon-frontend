@@ -122,6 +122,7 @@ export const useItemCreate = () => {
     setDescription,
     images,
     previews,
+    setPreviews,
     handleImageChange,
     handleImageRemove,
     handleGenerateDescription,

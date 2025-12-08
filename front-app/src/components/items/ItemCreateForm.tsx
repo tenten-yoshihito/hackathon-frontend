@@ -2,6 +2,7 @@
 
 import React, { FormEvent, ChangeEvent } from "react";
 import ImageUploader from "./ImageUploader";
+import styles from "./ItemCreateForm.module.css";
 
 interface Props {
   name: string;
@@ -17,12 +18,26 @@ interface Props {
   onSubmit: (e: FormEvent) => void;
   isLoading: boolean;
   isGenerating: boolean;
+  // 編集モード対応のオプショナルprops
+  mode?: "create" | "edit";
+  submitButtonText?: string;
+  pageTitle?: string;
 }
 
-const ItemCreateForm: React.FC<Props> = (props) => {
+const ItemCreateForm: React.FC<Props> = ({
+  mode = "create",
+  submitButtonText,
+  pageTitle,
+  ...props
+}) => {
+  // モードに応じたテキストを決定
+  const title = pageTitle || (mode === "create" ? "商品の出品" : "商品の編集");
+  const buttonText = submitButtonText || (mode === "create" ? "出品する" : "更新する");
+  const loadingText = mode === "create" ? "出品中..." : "更新中...";
+
   return (
     <form onSubmit={props.onSubmit} className="container-sm">
-      <h2 className="page-title">商品の出品</h2>
+      <h2 className="page-title">{title}</h2>
 
       {/* 画像アップロード部品 */}
       <ImageUploader
@@ -56,14 +71,13 @@ const ItemCreateForm: React.FC<Props> = (props) => {
       </div>
 
       <div className="form-group">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div className={styles.labelRow}>
           <label className="form-label">商品の説明 (任意)</label>
           <button
             type="button"
             onClick={props.handleGenerateDescription}
             disabled={props.isGenerating || props.previews.length === 0}
-            className="secondary-button"
-            style={{ marginTop: 0, fontSize: "14px", padding: "8px 16px" }}
+            className={`secondary-button ${styles.generateButton}`}
           >
             {props.isGenerating ? "生成中..." : "✨ AIで説明を自動生成"}
           </button>
@@ -81,7 +95,7 @@ const ItemCreateForm: React.FC<Props> = (props) => {
         disabled={props.isLoading || props.isGenerating}
         className="primary-button"
       >
-        {props.isLoading ? "出品中..." : props.isGenerating ? "生成中..." : "出品する"}
+        {props.isLoading ? loadingText : props.isGenerating ? "生成中..." : buttonText}
       </button>
     </form>
   );

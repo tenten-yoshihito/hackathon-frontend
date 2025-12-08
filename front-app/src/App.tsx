@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "pages/LoginPage";
 import SignupPage from "pages/SignupPage";
 import ItemCreatePage from "pages/ItemCreatePage";
+import ItemEditPage from "pages/ItemEditPage";
 import Home from "pages/Home";
 import Header from "components/common/Header";
 import ItemDetailPage from "pages/ItemDetailPage";
@@ -27,6 +28,14 @@ function App() {
           }
         />
         <Route path="/items/:id" element={<ItemDetailPage />} />
+        <Route
+          path="/items/:id/edit"
+          element={
+            <AuthGuard>
+              <ItemEditPage />
+            </AuthGuard>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

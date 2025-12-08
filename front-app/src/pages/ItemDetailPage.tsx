@@ -1,7 +1,7 @@
 // src/pages/ItemDetailPage.tsx
 
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useItemDetail } from "hooks/useItemDetail";
 import { useItemPurchase } from "hooks/useItemPurchase";
 import { fireAuth } from "lib/firebaseConfig";
@@ -16,6 +16,7 @@ import styles from "./ItemDetailPage.module.css";
 
 const ItemDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const { item, loading, error, refetch } = useItemDetail(id);
   
   // 購入ロジックをカスタムフックに委譲
@@ -26,7 +27,9 @@ const ItemDetailPage: React.FC = () => {
   const isOwnItem = item ? item.user_id === currentUser?.uid : false;
 
   const handleEditClick = () => {
-    alert("編集機能は後で実装します");
+    if (item) {
+      navigate(`/items/${item.id}/edit`);
+    }
   };
 
   if (loading) return <p className="center-text">読み込み中...</p>;
