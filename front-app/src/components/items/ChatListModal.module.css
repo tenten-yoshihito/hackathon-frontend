@@ -1,0 +1,84 @@
+/* Overlay for modal backdrop */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal container */
+.modal {
+  background-color: white;
+  border-radius: 8px;
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Modal title */
+.title {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Container for chat room list */
+.roomList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Individual chat room list item */
+.listItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  padding: 12px;
+}
+
+/* User icon/avatar */
+.userIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #eee;
+}
+
+/* User information container */
+.userInfo {
+  flex: 1;
+}
+
+/* User name */
+.userName {
+  font-weight: bold;
+}
+
+/* Created date */
+.createdDate {
+  font-size: 12px;
+  color: #888;
+}
+
+/* Button container */
+.buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* Individual button */
+.button {
+  flex: 1;
+}

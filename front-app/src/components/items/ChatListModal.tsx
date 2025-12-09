@@ -1,9 +1,9 @@
+// src/components/items/ChatListModal.tsx
+
 import React from "react";
 import { ChatRoomInfo } from "lib/api/chat";
-import styles from "./PurchaseModal.module.css";
-
-// デフォルトアイコン（必要に応じて変更してください）
-const defaultIcon = "https://placehold.jp/40x40.png?text=NoImg";
+import { DEFAULT_USER_ICON } from "constants/images";
+import styles from "./ChatListModal.module.css";
 
 interface Props {
   rooms: ChatRoomInfo[];
@@ -20,41 +20,24 @@ const ChatListModal: React.FC<Props> = ({ rooms, onSelectRoom, onClose }) => {
         {rooms.length === 0 ? (
           <p className="center-text">まだお問い合わせはありません</p>
         ) : (
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "12px" }}
-          >
+          <div className={styles.roomList}>
             {rooms.map((room) => (
               <button
                 key={room.room_id}
-                className="secondary-button w-full"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  textAlign: "left",
-                  padding: "12px",
-                }}
+                className={`secondary-button w-full ${styles.listItem}`}
                 onClick={() => onSelectRoom(room.room_id)}
               >
-                {/* アイコン */}
                 <img
-                  src={room.buyer_image_url || defaultIcon}
+                  src={room.buyer_image_url || DEFAULT_USER_ICON}
                   alt={room.buyer_name}
-                  style={{
-                    width: "40px",
-                    height: "40px",
-                    borderRadius: "50%",
-                    objectFit: "cover",
-                    border: "1px solid #eee",
-                  }}
+                  className={styles.userIcon}
                 />
 
-                {/* 名前と日付 */}
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: "bold" }}>
+                <div className={styles.userInfo}>
+                  <div className={styles.userName}>
                     {room.buyer_name || "ゲストユーザー"}
                   </div>
-                  <div style={{ fontSize: "12px", color: "#888" }}>
+                  <div className={styles.createdDate}>
                     {new Date(room.created_at).toLocaleDateString()}
                   </div>
                 </div>
@@ -63,7 +46,7 @@ const ChatListModal: React.FC<Props> = ({ rooms, onSelectRoom, onClose }) => {
           </div>
         )}
 
-        <div className={styles.buttons} style={{ marginTop: "20px" }}>
+        <div className={styles.buttons}>
           <button
             className={`secondary-button ${styles.button}`}
             onClick={onClose}
