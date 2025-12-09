@@ -11,7 +11,7 @@ export interface ItemDetail {
   image_urls: string[];
   status: string;
   created_at: string;
-  // seller_name, seller_icon なども追加
+  // 将来的に seller_name, seller_icon などを追加可能
 }
 
 export const getItemDetail = async (id: string): Promise<ItemDetail> => {

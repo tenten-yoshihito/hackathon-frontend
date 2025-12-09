@@ -4,13 +4,15 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useItemDetail } from "hooks/useItemDetail";
 import { useItemPurchase } from "hooks/useItemPurchase";
+import { useItemChat } from "hooks/useItemChat";
 import { fireAuth } from "lib/firebaseConfig";
 
-//  部品
+// コンポーネント
 import ImageCarousel from "components/items/ImageCarousel";
 import ItemDescription from "components/items/ItemDescription";
 import ItemDetailFooter from "components/items/ItemDetailFooter";
 import PurchaseModal from "components/items/PurchaseModal";
+import ChatListModal from "components/items/ChatListModal";
 
 import styles from "./ItemDetailPage.module.css";
 
@@ -18,9 +20,12 @@ const ItemDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { item, loading, error, refetch } = useItemDetail(id);
-  
+
   // 購入ロジックをカスタムフックに委譲
   const purchase = useItemPurchase({ item, refetch });
+
+  // チャットロジックをカスタムフックに委譲
+  const chat = useItemChat({ item });
 
   // 現在のユーザーと商品の出品者を比較
   const currentUser = fireAuth.currentUser;
@@ -58,9 +63,10 @@ const ItemDetailPage: React.FC = () => {
       </div>
 
       {/* 下: フッター */}
-      <ItemDetailFooter 
+      <ItemDetailFooter
         onPurchaseClick={purchase.handlePurchaseClick}
         onEditClick={handleEditClick}
+        onCommentClick={chat.onCommentClick}
         isSold={isSold}
         isOwnItem={isOwnItem}
       />
@@ -72,6 +78,15 @@ const ItemDetailPage: React.FC = () => {
           onConfirm={purchase.handleConfirmPurchase}
           onCancel={purchase.closeModal}
           isLoading={purchase.purchasing}
+        />
+      )}
+
+      {/* チャット一覧モーダル */}
+      {chat.showChatListModal && (
+        <ChatListModal
+          rooms={chat.chatList}
+          onSelectRoom={chat.openChatRoom}
+          onClose={chat.closeChatListModal}
         />
       )}
     </div>

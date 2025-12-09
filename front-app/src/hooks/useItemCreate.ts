@@ -22,18 +22,18 @@ export const useItemCreate = () => {
     if (e.target.files && e.target.files.length > 0) {
       const newFiles = Array.from(e.target.files);
 
-      // 画像リストの更新 
+      // 画像リストを更新
       setImages((prev) => [...prev, ...newFiles]);
 
       const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
       setPreviews((prev) => [...prev, ...newPreviews]);
 
-      // inputの値をリセットする
+      // inputの値をリセット
       e.target.value = "";
     }
   };
 
-  // 画像を削除する処理
+  // 画像を削除
   const handleImageRemove = (index: number) => {
     // プレビューURLをクリーンアップ
     URL.revokeObjectURL(previews[index]);
@@ -84,7 +84,7 @@ export const useItemCreate = () => {
 
       const token = await user.getIdToken();
 
-      // 画像をFirebase StorageにアップロードしてURLを取得 
+      // 画像をFirebase StorageにアップロードしてURLを取得
       const imageUrls = await Promise.all(
         images.map(async (file) => {
           const fileName = `${Date.now()}_${file.name}`;
@@ -95,7 +95,7 @@ export const useItemCreate = () => {
         })
       );
 
-      // 取得したURLと商品データをGoサーバーへ送信 
+      // 取得したURLと商品データをGoサーバーへ送信
       await createItemInBackend(token, {
         name: name,
         price: parseInt(price), // 文字列を数値に変換
@@ -104,7 +104,7 @@ export const useItemCreate = () => {
       });
 
       alert("出品が完了しました！");
-      navigate("/"); // ホームへ戻る 
+      navigate("/"); // ホームへ戻る
     } catch (err) {
       console.error(err);
       alert("出品に失敗しました");

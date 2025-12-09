@@ -1,0 +1,90 @@
+.chatContainer {
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  height: calc(100vh - 200px); /* ヘッダー等の高さを引く */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.messageArea {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.messageRow {
+  display: flex;
+  flex-direction: column;
+  max-width: 70%;
+}
+
+/* 自分のメッセージ */
+.myMessage {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+.myBubble {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 16px 16px 0 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* 相手のメッセージ */
+.otherMessage {
+  align-self: flex-start;
+  align-items: flex-start;
+}
+.otherBubble {
+  background-color: #e0e0e0;
+  color: #333;
+  padding: 10px 16px;
+  border-radius: 16px 16px 16px 0;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.timestamp {
+  font-size: 10px;
+  color: #888;
+  margin-top: 4px;
+  padding: 0 4px;
+}
+
+.inputArea {
+  padding: 16px;
+  background-color: white;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  gap: 12px;
+}
+
+.textarea {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+  height: 40px;
+  font-family: inherit;
+}
+
+.sendButton {
+  height: 44px; /* テキストエリアのpadding込みの高さに合わせる */
+  padding: 0 24px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}

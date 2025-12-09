@@ -9,6 +9,7 @@ import ItemEditPage from "pages/ItemEditPage";
 import Home from "pages/Home";
 import Header from "components/common/Header";
 import ItemDetailPage from "pages/ItemDetailPage";
+import ChatPage from "pages/ChatPage";
 import { AuthGuard } from "components/auth/AuthGuard";
 
 function App() {
@@ -33,6 +34,14 @@ function App() {
           element={
             <AuthGuard>
               <ItemEditPage />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/chats/:roomId"
+          element={
+            <AuthGuard>
+              <ChatPage />
             </AuthGuard>
           }
         />
