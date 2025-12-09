@@ -1,7 +1,11 @@
 // src/hooks/useChatRoom.ts
 
-import { useState, useEffect } from "react";
-import { getMessages, sendMessage as sendMessageAPI, Message } from "lib/api/chat";
+import { useState, useEffect, useCallback } from "react";
+import {
+  getMessages,
+  sendMessage as sendMessageAPI,
+  Message,
+} from "lib/api/chat";
 
 interface UseChatRoomProps {
   roomId: string | undefined;
@@ -14,7 +18,7 @@ export const useChatRoom = ({ roomId }: UseChatRoomProps) => {
   const [loading, setLoading] = useState(true);
 
   // メッセージを取得
-  const fetchLatestMessages = async () => {
+  const fetchLatestMessages = useCallback(async () => {
     if (!roomId) return;
     try {
       const data = await getMessages(roomId);
@@ -24,14 +28,14 @@ export const useChatRoom = ({ roomId }: UseChatRoomProps) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [roomId]);
 
   // ポーリング設定 (3秒ごとに更新)
   useEffect(() => {
     fetchLatestMessages();
     const intervalId = setInterval(fetchLatestMessages, 3000);
     return () => clearInterval(intervalId);
-  }, [roomId]);
+  }, [fetchLatestMessages, roomId]);
 
   // メッセージを送信
   const sendMessage = async () => {
