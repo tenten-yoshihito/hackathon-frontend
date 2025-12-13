@@ -10,6 +10,8 @@ import Home from "pages/Home";
 import Header from "components/common/Header";
 import ItemDetailPage from "pages/ItemDetailPage";
 import ChatPage from "pages/ChatPage";
+import UserProfilePage from "pages/UserProfilePage";
+import ProfileEditPage from "pages/ProfileEditPage";
 import { AuthGuard } from "components/auth/AuthGuard";
 
 function App() {
@@ -42,6 +44,15 @@ function App() {
           element={
             <AuthGuard>
               <ChatPage />
+            </AuthGuard>
+          }
+        />
+        <Route path="/users/:userId" element={<UserProfilePage />} />
+        <Route
+          path="/profile/edit"
+          element={
+            <AuthGuard>
+              <ProfileEditPage />
             </AuthGuard>
           }
         />

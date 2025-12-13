@@ -1,7 +1,7 @@
 // src/pages/Home.tsx
 
 import React, { useEffect, useState } from "react";
-import { getItemList, ItemSimple } from "lib/api/item_list";
+import { fetchItems, ItemSimple } from "lib/api/item_list";
 import { useMyItems } from "hooks/useMyItems";
 import ItemGrid from "components/items/ItemGrid";
 import TabNavigation from "components/common/TabNavigation";
@@ -13,9 +13,9 @@ const Home: React.FC = () => {
   const { items: myItems, loading: loadingMy } = useMyItems();
 
   useEffect(() => {
-    const fetchItems = async () => {
+    const loadItems = async () => {
       try {
-        const data = await getItemList();
+        const data = await fetchItems();
         setAllItems(data);
       } catch (err) {
         console.error(err);
@@ -24,7 +24,7 @@ const Home: React.FC = () => {
       }
     };
 
-    fetchItems();
+    loadItems();
   }, []);
 
   const displayItems = activeTab === "all" ? allItems : myItems;

@@ -1,16 +1,12 @@
 // src/lib/api/my_items.ts
 
-import { getIdToken } from "../firebaseConfig";
 import { getBaseUrl } from "./client";
+import { getIdToken } from "../firebaseConfig";
+import { ItemSimple } from "types/item";
 
-export interface ItemSimple {
-  id: string;
-  name: string;
-  price: number;
-  image_url: string;
-  status: string;
-}
+export type { ItemSimple };
 
+//自分が出品した商品一覧を取得
 export const fetchMyItems = async (): Promise<ItemSimple[]> => {
   const token = await getIdToken();
   
