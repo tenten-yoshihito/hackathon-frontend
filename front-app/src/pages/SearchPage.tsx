@@ -23,6 +23,9 @@ const SearchPage: React.FC = () => {
         return;
       }
 
+      // エラー状態をリセット
+      setError(null);
+
       try {
         setLoading(true);
         const results = await searchItems(keyword);
