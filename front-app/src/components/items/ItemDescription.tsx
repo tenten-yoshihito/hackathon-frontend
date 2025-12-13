@@ -11,9 +11,6 @@ interface ItemDescriptionProps {
 const ItemDescription: React.FC<ItemDescriptionProps> = ({ item }) => {
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>{item.name}</h1>
-      <p className={styles.price}>¥{item.price.toLocaleString()}</p>
-
       {/* 出品者情報 */}
       <div className={styles.sellerSection}>
         <h3 className={styles.sectionTitle}>出品者</h3>
@@ -22,6 +19,7 @@ const ItemDescription: React.FC<ItemDescriptionProps> = ({ item }) => {
             src={item.seller_icon_url || DEFAULT_USER_ICON}
             alt={item.seller_name}
             className={styles.sellerIcon}
+            key={item.seller_icon_url} // Force re-render when icon changes
           />
           <span className={styles.sellerName}>{item.seller_name}</span>
         </Link>

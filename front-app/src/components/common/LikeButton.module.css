@@ -1,0 +1,30 @@
+/* src/components/common/LikeButton.module.css */
+
+.likeButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.likeButton:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+  transform: scale(1.1);
+}
+
+.likeButton.liked {
+  color: #e53935;
+}
+
+.likeButton svg {
+  width: 24px;
+  height: 24px;
+}
