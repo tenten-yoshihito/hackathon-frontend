@@ -1,17 +1,12 @@
 // src/lib/api/item_list.ts
 
 import { getBaseUrl } from "./client";
+import { ItemSimple } from "types/item";
 
-// Goの ItemSimple 構造体と合わせる
-export interface ItemSimple {
-  id: string;
-  name: string;
-  price: number;
-  image_url: string;
-  status: string;
-}
+export type { ItemSimple };
 
-export const getItemList = async (): Promise<ItemSimple[]> => {
+//商品一覧を取得
+export const fetchItems = async (): Promise<ItemSimple[]> => {
   const res = await fetch(`${getBaseUrl()}/items`, {
     method: "GET",
     headers: {

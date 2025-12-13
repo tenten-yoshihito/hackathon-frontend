@@ -6,12 +6,14 @@ export interface ItemDetail {
   id: string;
   user_id: string;
   name: string;
-  price: number;
   description: string;
-  image_urls: string[];
+  price: number;
   status: string;
+  image_urls: string[];
   created_at: string;
-  // 将来的に seller_name, seller_icon などを追加可能
+  updated_at: string;
+  seller_name: string;
+  seller_icon_url: string;
 }
 
 export const getItemDetail = async (id: string): Promise<ItemDetail> => {

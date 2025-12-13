@@ -1,28 +1,36 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { ItemDetail } from "lib/api/item_detail";
+import { DEFAULT_USER_ICON } from "constants/images";
 import styles from "./ItemDescription.module.css";
 
-interface Props {
+interface ItemDescriptionProps {
   item: ItemDetail;
 }
 
-const ItemDescription: React.FC<Props> = ({ item }) => {
+const ItemDescription: React.FC<ItemDescriptionProps> = ({ item }) => {
   return (
     <div className={styles.container}>
-      <h1 className={styles.name}>{item.name}</h1>
+      <h1 className={styles.title}>{item.name}</h1>
+      <p className={styles.price}>¥{item.price.toLocaleString()}</p>
 
-      <div className={styles.price}>
-        ¥{item.price.toLocaleString()}
-        <span className={styles.tax}>(税込) 送料込み</span>
+      {/* 出品者情報 */}
+      <div className={styles.sellerSection}>
+        <h3 className={styles.sectionTitle}>出品者</h3>
+        <Link to={`/users/${item.user_id}`} className={styles.sellerLink}>
+          <img
+            src={item.seller_icon_url || DEFAULT_USER_ICON}
+            alt={item.seller_name}
+            className={styles.sellerIcon}
+          />
+          <span className={styles.sellerName}>{item.seller_name}</span>
+        </Link>
       </div>
 
-      <hr className={styles.divider} />
-
-      <div>
-        <h3 className={styles.descTitle}>商品の説明</h3>
-        <p className={styles.descText}>
-          {item.description || "説明はありません"}
-        </p>
+      {/* 商品説明 */}
+      <div className={styles.descriptionSection}>
+        <h3 className={styles.sectionTitle}>商品の説明</h3>
+        <p className={styles.description}>{item.description || "説明なし"}</p>
       </div>
     </div>
   );
