@@ -5,6 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useItemDetail } from "hooks/useItemDetail";
 import { useItemPurchase } from "hooks/useItemPurchase";
 import { useItemChat } from "hooks/useItemChat";
+import { useLikes } from "hooks/useLikes";
 import { fireAuth } from "lib/firebaseConfig";
 
 // コンポーネント
@@ -13,6 +14,7 @@ import ItemDescription from "components/items/ItemDescription";
 import ItemDetailFooter from "components/items/ItemDetailFooter";
 import PurchaseModal from "components/items/PurchaseModal";
 import ChatListModal from "components/items/ChatListModal";
+import LikeButton from "components/common/LikeButton";
 
 import styles from "./ItemDetailPage.module.css";
 
@@ -20,6 +22,7 @@ const ItemDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { item, loading, error, refetch } = useItemDetail(id);
+  const { toggleLike, checkIsLiked } = useLikes();
 
   // 購入ロジックをカスタムフックに委譲
   const purchase = useItemPurchase({ item, refetch });
@@ -57,6 +60,21 @@ const ItemDetailPage: React.FC = () => {
 
         {/* 右: 説明 */}
         <div className={styles.infoSection}>
+          {/* いいねボタンと商品名 */}
+          <div className={styles.titleRow}>
+            <h1 className={styles.itemName}>{item.name}</h1>
+            {id && (
+              <LikeButton
+                isLiked={checkIsLiked(id)}
+                onClick={() => toggleLike(id)}
+              />
+            )}
+          </div>
+
+          {/* 価格 */}
+          <p className={styles.price}>¥{item.price.toLocaleString()}</p>
+
+          {/* 商品説明コンポーネント */}
           <ItemDescription item={item} />
           <div className={styles.spacer} />
         </div>

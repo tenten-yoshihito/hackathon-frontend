@@ -69,3 +69,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.likeButtonWrapper {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+}
