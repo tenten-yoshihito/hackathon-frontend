@@ -96,3 +96,65 @@
 .dropdownItem:not(:last-child) {
   border-bottom: 1px solid var(--border-color-light);
 }
+
+/* 検索フォーム */
+.searchForm {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  max-width: 500px;
+  margin: 0 20px;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 8px 16px;
+  border: 1px solid var(--border-color-light);
+  border-radius: 24px 0 0 24px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.searchInput:focus {
+  border-color: var(--primary-color);
+}
+
+.searchButton {
+  padding: 8px 16px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 0 24px 24px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.searchButton:hover {
+  background-color: var(--primary-color-dark);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .searchForm {
+    max-width: 300px;
+    margin: 0 12px;
+  }
+
+  .searchInput {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+
+  .searchButton {
+    padding: 6px 12px;
+  }
+
+  .searchButton svg {
+    width: 18px;
+    height: 18px;
+  }
+}
