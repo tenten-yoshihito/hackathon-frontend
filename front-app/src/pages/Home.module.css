@@ -1,22 +1,10 @@
-/* src/pages/SearchPage.module.css */
-
-.title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 8px;
-  color: var(--text-color);
-}
-
-.count {
-  font-size: 14px;
-  color: var(--text-color-secondary);
-  margin-bottom: 24px;
-}
+/* src/pages/Home.module.css */
 
 .contentWrapper {
   display: flex;
   gap: 24px;
   align-items: flex-start;
+  margin-top: 20px;
 }
 
 .sidebar {
@@ -64,20 +52,6 @@
 .mainContent {
   flex: 1;
   min-width: 0;
-}
-
-.message {
-  text-align: center;
-  padding: 60px 20px;
-  font-size: 16px;
-  color: var(--text-color-secondary);
-}
-
-.error {
-  text-align: center;
-  padding: 60px 20px;
-  font-size: 16px;
-  color: var(--error-color);
 }
 
 /* レスポンシブ対応 */
