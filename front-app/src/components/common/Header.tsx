@@ -12,11 +12,20 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const onLogout = async () => {
     await handleSignOut();
     navigate("/login");
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchKeyword.trim()) {
+      navigate(`/search?name=${encodeURIComponent(searchKeyword.trim())}`);
+      setSearchKeyword("");
+    }
   };
 
   // ホーム画面かどうかを判定
@@ -45,6 +54,32 @@ const Header: React.FC = () => {
       <Link to="/" className={styles.logo}>
         uttc
       </Link>
+
+      {/* 検索フォーム */}
+      <form onSubmit={handleSearch} className={styles.searchForm}>
+        <input
+          type="text"
+          value={searchKeyword}
+          onChange={(e) => setSearchKeyword(e.target.value)}
+          placeholder="商品を検索"
+          className={styles.searchInput}
+        />
+        <button type="submit" className={styles.searchButton} aria-label="検索">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+        </button>
+      </form>
 
       {/* ホーム画面でのみ表示 */}
       {isHomePage && (

@@ -18,6 +18,23 @@ export const fetchItems = async (): Promise<ItemSimple[]> => {
     throw new Error("商品一覧の取得に失敗しました");
   }
 
-  const json = await res.json();
-  return json.items;
+  const data = await res.json();
+  return data.items || [];
+};
+
+//キーワードで商品を検索
+export const searchItems = async (keyword: string): Promise<ItemSimple[]> => {
+  const res = await fetch(`${getBaseUrl()}/items?name=${encodeURIComponent(keyword)}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to search items");
+  }
+
+  const data = await res.json();
+  return data.items || [];
 };

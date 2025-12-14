@@ -1,73 +1,54 @@
+// src/pages/SearchPage.tsx
 
 import React, { useEffect, useState, useMemo } from "react";
-import { fetchItems, ItemSimple } from "lib/api/item_list";
-import { getLikedItems } from "lib/api/like";
-import { useMyItems } from "hooks/useMyItems";
+import { useSearchParams } from "react-router-dom";
+import { searchItems } from "lib/api/item_list";
+import { ItemSimple } from "types/item";
 import { useLikes } from "hooks/useLikes";
 import ItemGrid from "components/items/ItemGrid";
-import TabNavigation from "components/common/TabNavigation";
-import styles from "./Home.module.css";
+import styles from "./SearchPage.module.css";
 
 type StatusFilter = "all" | "on_sale";
 type SortOption = "newest" | "price_low" | "price_high";
 
-const Home: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<"all" | "my" | "liked">("all");
-  const [allItems, setAllItems] = useState<ItemSimple[]>([]);
-  const [likedItems, setLikedItems] = useState<ItemSimple[]>([]);
-  const [loadingAll, setLoadingAll] = useState(true);
-  const [loadingLiked, setLoadingLiked] = useState(false);
+const SearchPage: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const keyword = searchParams.get("name") || "";
+  const [items, setItems] = useState<ItemSimple[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [sortOption, setSortOption] = useState<SortOption>("newest");
-  const { items: myItems, loading: loadingMy } = useMyItems();
   const { likedItemIds, toggleLike, checkIsLiked } = useLikes();
 
   useEffect(() => {
-    const loadItems = async () => {
+    const loadSearchResults = async () => {
+      if (!keyword) {
+        setLoading(false);
+        return;
+      }
+
+      // エラー状態をリセット
+      setError(null);
+
       try {
-        const data = await fetchItems();
-        setAllItems(data);
+        setLoading(true);
+        const results = await searchItems(keyword);
+        setItems(results);
       } catch (err) {
-        console.error(err);
+        console.error("Failed to search items:", err);
+        setError("検索に失敗しました");
       } finally {
-        setLoadingAll(false);
+        setLoading(false);
       }
     };
 
-    loadItems();
-  }, []);
-
-  // いいねタブが選択されたときにいいね商品を取得
-  useEffect(() => {
-    if (activeTab === "liked") {
-      const loadLikedItems = async () => {
-        try {
-          setLoadingLiked(true);
-          const data = await getLikedItems();
-          setLikedItems(data);
-        } catch (err) {
-          console.error("Failed to load liked items:", err);
-        } finally {
-          setLoadingLiked(false);
-        }
-      };
-
-      loadLikedItems();
-    }
-  }, [activeTab]);
-
-  const displayItems =
-    activeTab === "all" ? allItems : activeTab === "my" ? myItems : likedItems;
-  const loading =
-    activeTab === "all"
-      ? loadingAll
-      : activeTab === "my"
-      ? loadingMy
-      : loadingLiked;
+    loadSearchResults();
+  }, [keyword]);
 
   // フィルターとソートを適用
   const filteredAndSortedItems = useMemo(() => {
-    let result = [...displayItems];
+    let result = [...items];
 
     // ステータスフィルター
     if (statusFilter === "on_sale") {
@@ -89,11 +70,38 @@ const Home: React.FC = () => {
     }
 
     return result;
-  }, [displayItems, statusFilter, sortOption]);
+  }, [items, statusFilter, sortOption]);
+
+  if (!keyword) {
+    return (
+      <div className="container-lg">
+        <p className={styles.message}>検索キーワードを入力してください</p>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="container-lg">
+        <p className="center-text">検索中...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container-lg">
+        <p className={styles.error}>{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="container-lg">
-      <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+      <h1 className={styles.title}>「{keyword}」の検索結果</h1>
+      <p className={styles.count}>
+        {filteredAndSortedItems.length}件の商品が見つかりました
+      </p>
 
       <div className={styles.contentWrapper}>
         {/* 左側: フィルター・ソート */}
@@ -161,8 +169,8 @@ const Home: React.FC = () => {
 
         {/* 右側: 商品一覧 */}
         <main className={styles.mainContent}>
-          {loading ? (
-            <p className="center-text">読み込み中...</p>
+          {filteredAndSortedItems.length === 0 ? (
+            <p className={styles.message}>該当する商品はありません</p>
           ) : (
             <ItemGrid
               items={filteredAndSortedItems}
@@ -177,4 +185,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default SearchPage;

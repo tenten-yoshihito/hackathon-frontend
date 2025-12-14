@@ -1,0 +1,96 @@
+/* src/pages/SearchPage.module.css */
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+.count {
+  font-size: 14px;
+  color: var(--text-color-secondary);
+  margin-bottom: 24px;
+}
+
+.contentWrapper {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: #fff;
+  border: 1px solid var(--border-color-light);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.filterSection {
+  margin-bottom: 24px;
+}
+
+.filterSection:last-child {
+  margin-bottom: 0;
+}
+
+.filterTitle {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: var(--text-color);
+}
+
+.filterOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.filterOption input[type="radio"] {
+  cursor: pointer;
+}
+
+.filterOption:hover {
+  color: var(--primary-color);
+}
+
+.mainContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.message {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 16px;
+  color: var(--text-color-secondary);
+}
+
+.error {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 16px;
+  color: var(--error-color);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .contentWrapper {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+
+  .filterSection {
+    margin-bottom: 16px;
+  }
+}

@@ -1,0 +1,70 @@
+/* src/pages/Home.module.css */
+
+.contentWrapper {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: #fff;
+  border: 1px solid var(--border-color-light);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.filterSection {
+  margin-bottom: 24px;
+}
+
+.filterSection:last-child {
+  margin-bottom: 0;
+}
+
+.filterTitle {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: var(--text-color);
+}
+
+.filterOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.filterOption input[type="radio"] {
+  cursor: pointer;
+}
+
+.filterOption:hover {
+  color: var(--primary-color);
+}
+
+.mainContent {
+  flex: 1;
+  min-width: 0;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .contentWrapper {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+
+  .filterSection {
+    margin-bottom: 16px;
+  }
+}
