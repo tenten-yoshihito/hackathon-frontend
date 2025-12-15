@@ -125,10 +125,8 @@ const Home: React.FC = () => {
 
   return (
     <div className="container-lg">
-      <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
-
       <div className={styles.contentWrapper}>
-        {/* 左側: フィルター・ソート */}
+        {/* 左側: フィルター・ソート (Sidebar) */}
         <aside className={styles.sidebar}>
           {/* ステータスフィルター */}
           <div className={styles.filterSection}>
@@ -191,34 +189,38 @@ const Home: React.FC = () => {
           </div>
         </aside>
 
-        {/* 右側: 商品一覧 */}
-        <main className={styles.mainContent}>
-          {loading ? (
-            <p className="center-text">読み込み中...</p>
-          ) : (
-            <>
-              <ItemGrid
-                items={filteredAndSortedItems}
-                likedItemIds={likedItemIds}
-                onLikeClick={toggleLike}
-                checkIsLiked={checkIsLiked}
-              />
-              
-              {/* Load More Button for 'all' tab */}
-              {activeTab === "all" && hasMore && (
-                <div style={{ textAlign: "center", marginTop: "24px" }}>
-                  <button 
-                    className="secondary-button" 
-                    onClick={handleLoadMore}
-                    disabled={loadingMore}
-                  >
-                    {loadingMore ? "読み込み中..." : "もっと見る"}
-                  </button>
-                </div>
-              )}
-            </>
-          )}
-        </main>
+        {/* 右側: メインカラム (タブ + 商品一覧) */}
+        <div className={styles.mainColumn}>
+          <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+
+          <main className={styles.mainContent}>
+            {loading ? (
+              <p className="center-text">読み込み中...</p>
+            ) : (
+              <>
+                <ItemGrid
+                  items={filteredAndSortedItems}
+                  likedItemIds={likedItemIds}
+                  onLikeClick={toggleLike}
+                  checkIsLiked={checkIsLiked}
+                />
+                
+                {/* Load More Button for 'all' tab */}
+                {activeTab === "all" && hasMore && (
+                  <div style={{ textAlign: "center", marginTop: "24px" }}>
+                    <button 
+                      className="secondary-button" 
+                      onClick={handleLoadMore}
+                      disabled={loadingMore}
+                    >
+                      {loadingMore ? "読み込み中..." : "もっと見る"}
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
+          </main>
+        </div>
       </div>
     </div>
   );

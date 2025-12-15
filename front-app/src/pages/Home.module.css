@@ -7,6 +7,15 @@
   margin-top: 20px;
 }
 
+.mainColumn {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  /* TabNavigation has margin-bottom: 24px, so we don't need huge gap here, 
+     but we can add some if needed. For now rely on component margins. */
+}
+
 .sidebar {
   width: 220px;
   flex-shrink: 0;
@@ -14,6 +23,9 @@
   border: 1px solid var(--border-color-light);
   border-radius: 8px;
   padding: 20px;
+  /* スクロール追従 */
+  position: sticky;
+  top: 24px;
 }
 
 .filterSection {
@@ -62,6 +74,7 @@
 
   .sidebar {
     width: 100%;
+    position: static;
   }
 
   .filterSection {
