@@ -1,5 +1,6 @@
+// src/pages/Home.tsx
 
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { fetchItems, ItemSimple } from "lib/api/item_list";
 import { getLikedItems } from "lib/api/like";
 import { useMyItems } from "hooks/useMyItems";
@@ -17,25 +18,56 @@ const Home: React.FC = () => {
   const [likedItems, setLikedItems] = useState<ItemSimple[]>([]);
   const [loadingAll, setLoadingAll] = useState(true);
   const [loadingLiked, setLoadingLiked] = useState(false);
+  const [offset, setOffset] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [sortOption, setSortOption] = useState<SortOption>("newest");
   const { items: myItems, loading: loadingMy } = useMyItems();
   const { likedItemIds, toggleLike, checkIsLiked } = useLikes();
 
-  useEffect(() => {
-    const loadItems = async () => {
-      try {
-        const data = await fetchItems();
-        setAllItems(data);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoadingAll(false);
-      }
-    };
+  // Removed unused useEffect/loadItems block
 
-    loadItems();
+
+  // Moved functions up to avoid "used before declaration" errors
+  const fetchData = useCallback(async (currentOffset: number) => {
+    try {
+      if (currentOffset === 0) setLoadingAll(true);
+      else setLoadingMore(true);
+
+      const limit = 20;
+      const data = await fetchItems(limit, currentOffset);
+
+      if (data.length < limit) setHasMore(false);
+      
+      setAllItems(prev => currentOffset === 0 ? data : [...prev, ...data]);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingAll(false);
+      setLoadingMore(false);
+    }
   }, []);
+
+  // Initial load is handled by the "Reset logic" useEffect below.
+
+  // Reset logic when tab changes
+  useEffect(() => {
+    if (activeTab === "all") {
+      setOffset(0);
+      setAllItems([]);
+      setHasMore(true);
+      fetchData(0); 
+    }
+  }, [activeTab, fetchData]);
+
+  const handleLoadMore = () => {
+    fetchData(offset + 20); 
+    setOffset(prev => prev + 20);
+  };
+  
+  // Wait, mixing logic in replacement chunk is hard. I'll rewrite the whole block.
+
 
   // いいねタブが選択されたときにいいね商品を取得
   useEffect(() => {
@@ -164,12 +196,27 @@ const Home: React.FC = () => {
           {loading ? (
             <p className="center-text">読み込み中...</p>
           ) : (
-            <ItemGrid
-              items={filteredAndSortedItems}
-              likedItemIds={likedItemIds}
-              onLikeClick={toggleLike}
-              checkIsLiked={checkIsLiked}
-            />
+            <>
+              <ItemGrid
+                items={filteredAndSortedItems}
+                likedItemIds={likedItemIds}
+                onLikeClick={toggleLike}
+                checkIsLiked={checkIsLiked}
+              />
+              
+              {/* Load More Button for 'all' tab */}
+              {activeTab === "all" && hasMore && (
+                <div style={{ textAlign: "center", marginTop: "24px" }}>
+                  <button 
+                    className="secondary-button" 
+                    onClick={handleLoadMore}
+                    disabled={loadingMore}
+                  >
+                    {loadingMore ? "読み込み中..." : "もっと見る"}
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </main>
       </div>
