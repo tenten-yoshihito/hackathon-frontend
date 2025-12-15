@@ -12,6 +12,10 @@
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  /* Prevent shrinking/distortion */
+  min-width: 40px;
+  min-height: 40px;
+  flex-shrink: 0;
   padding: 0;
 }
 

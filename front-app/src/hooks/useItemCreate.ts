@@ -6,6 +6,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { createItemInBackend } from "lib/api/item_register";
 import { generateDescription } from "lib/api/description";
 import { useNavigate } from "react-router-dom";
+import imageCompression from "browser-image-compression";
 
 export const useItemCreate = () => {
   const [name, setName] = useState("");
@@ -87,10 +88,24 @@ export const useItemCreate = () => {
       // 画像をFirebase StorageにアップロードしてURLを取得
       const imageUrls = await Promise.all(
         images.map(async (file) => {
+          let uploadFile = file;
+
+          try {
+            const options = {
+              maxSizeMB: 0.2,
+              maxWidthOrHeight: 512,
+              useWebWorker: true,
+            };
+            const compressedFile = await imageCompression(file, options);
+            uploadFile = compressedFile;
+          } catch (error) {
+            console.error("Image compression failed, uploading original file:", error);
+          }
+
           const fileName = `${Date.now()}_${file.name}`;
           const storageRef = ref(fireStorage, `items/${user.uid}/${fileName}`);
 
-          await uploadBytes(storageRef, file);
+          await uploadBytes(storageRef, uploadFile);
           return await getDownloadURL(storageRef);
         })
       );

@@ -1,6 +1,6 @@
 // src/components/items/ImageCarousel.tsx
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./ImageCarousel.module.css";
 
 interface Props {
@@ -11,7 +11,23 @@ interface Props {
 const ImageCarousel: React.FC<Props> = ({ images, alt }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // 画像がない場合
+  // 画像を裏で先読みする関数
+  useEffect(() => {
+    if (!images || images.length <= 1) return;
+
+    // 次の画像と前の画像のインデックスを計算
+    const nextIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
+    const prevIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
+
+    // 画像オブジェクトを作って読み込ませる（ブラウザのキャッシュに乗る）
+    const preloadImg1 = new Image();
+    preloadImg1.src = images[nextIndex];
+    
+    const preloadImg2 = new Image();
+    preloadImg2.src = images[prevIndex];
+
+  }, [currentIndex, images]);
+
   if (!images || images.length === 0) {
     return (
       <div className={styles.container}>
@@ -36,18 +52,19 @@ const ImageCarousel: React.FC<Props> = ({ images, alt }) => {
         className={styles.image}
       />
 
-      {/* 画像が2枚以上あるときだけ矢印とドットを表示 */}
       {images.length > 1 && (
         <>
           <button
             onClick={prevImage}
             className={`${styles.arrow} ${styles.arrowLeft}`}
+            type="button"
           >
             ‹
           </button>
           <button
             onClick={nextImage}
             className={`${styles.arrow} ${styles.arrowRight}`}
+            type="button"
           >
             ›
           </button>
