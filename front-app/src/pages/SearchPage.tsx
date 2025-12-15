@@ -1,6 +1,6 @@
 // src/pages/SearchPage.tsx
 
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import { searchItems } from "lib/api/item_list";
 import { ItemSimple } from "types/item";
@@ -17,34 +17,58 @@ const SearchPage: React.FC = () => {
   const [items, setItems] = useState<ItemSimple[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [offset, setOffset] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [sortOption, setSortOption] = useState<SortOption>("newest");
   const { likedItemIds, toggleLike, checkIsLiked } = useLikes();
 
-  useEffect(() => {
-    const loadSearchResults = async () => {
-      if (!keyword) {
-        setLoading(false);
-        return;
-      }
+  const performSearch = useCallback(async (isLoadMore: boolean = false) => {
+    if (!keyword) {
+      setLoading(false);
+      return;
+    }
 
-      // エラー状態をリセット
-      setError(null);
+    // Reset error
+    setError(null);
 
-      try {
-        setLoading(true);
-        const results = await searchItems(keyword);
+    try {
+      if (!isLoadMore) setLoading(true);
+      else setLoadingMore(true);
+
+      const currentOffset = isLoadMore ? offset : 0;
+      const limit = 20;
+
+      const results = await searchItems(keyword, limit, currentOffset);
+
+      if (results.length < limit) setHasMore(false);
+      else setHasMore(true);
+
+      if (isLoadMore) {
+        setItems((prev) => [...prev, ...results]);
+        setOffset((prev) => prev + limit);
+      } else {
         setItems(results);
-      } catch (err) {
-        console.error("Failed to search items:", err);
-        setError("検索に失敗しました");
-      } finally {
-        setLoading(false);
+        setOffset(limit);
       }
-    };
+    } catch (err) {
+      console.error("Failed to search items:", err);
+      setError("検索に失敗しました");
+    } finally {
+      setLoading(false);
+      setLoadingMore(false);
+    }
+  }, [keyword, offset]);
 
-    loadSearchResults();
-  }, [keyword]);
+  // Initial search when keyword changes
+  useEffect(() => {
+    performSearch(false);
+  }, [keyword, performSearch]);
+
+  const handleLoadMore = () => {
+    performSearch(true);
+  };
 
   // フィルターとソートを適用
   const filteredAndSortedItems = useMemo(() => {
@@ -172,12 +196,26 @@ const SearchPage: React.FC = () => {
           {filteredAndSortedItems.length === 0 ? (
             <p className={styles.message}>該当する商品はありません</p>
           ) : (
-            <ItemGrid
-              items={filteredAndSortedItems}
-              likedItemIds={likedItemIds}
-              onLikeClick={toggleLike}
-              checkIsLiked={checkIsLiked}
-            />
+            <>
+              <ItemGrid
+                items={filteredAndSortedItems}
+                likedItemIds={likedItemIds}
+                onLikeClick={toggleLike}
+                checkIsLiked={checkIsLiked}
+              />
+              
+              {hasMore && (
+                <div style={{ textAlign: "center", marginTop: "24px" }}>
+                  <button 
+                    className="secondary-button" 
+                    onClick={handleLoadMore}
+                    disabled={loadingMore}
+                  >
+                    {loadingMore ? "読み込み中..." : "もっと見る"}
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </main>
       </div>

@@ -6,8 +6,8 @@ import { ItemSimple } from "types/item";
 export type { ItemSimple };
 
 //商品一覧を取得
-export const fetchItems = async (): Promise<ItemSimple[]> => {
-  const res = await fetch(`${getBaseUrl()}/items`, {
+export const fetchItems = async (limit: number = 20, offset: number = 0): Promise<ItemSimple[]> => {
+  const res = await fetch(`${getBaseUrl()}/items?limit=${limit}&offset=${offset}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -23,13 +23,16 @@ export const fetchItems = async (): Promise<ItemSimple[]> => {
 };
 
 //キーワードで商品を検索
-export const searchItems = async (keyword: string): Promise<ItemSimple[]> => {
-  const res = await fetch(`${getBaseUrl()}/items?name=${encodeURIComponent(keyword)}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+export const searchItems = async (keyword: string, limit: number = 20, offset: number = 0): Promise<ItemSimple[]> => {
+  const res = await fetch(
+    `${getBaseUrl()}/items?name=${encodeURIComponent(keyword)}&limit=${limit}&offset=${offset}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   if (!res.ok) {
     throw new Error("Failed to search items");
