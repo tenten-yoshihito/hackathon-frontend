@@ -7,6 +7,7 @@ export interface ItemUpdateData {
   name: string;
   price: number;
   description: string;
+  image_urls: string[];
 }
 
 export const updateItem = async (itemId: string, data: ItemUpdateData): Promise<void> => {

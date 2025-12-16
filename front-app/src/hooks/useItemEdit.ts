@@ -27,7 +27,7 @@ export const useItemEdit = (itemId: string | undefined) => {
 
   // onSubmitを更新用に上書き
   const onSubmit = (e: React.FormEvent) => {
-    handleUpdate(e, formProps.name, formProps.price, formProps.description);
+    handleUpdate(e, formProps.name, formProps.price, formProps.description, formProps.previews, formProps.images);
   };
 
   return {
