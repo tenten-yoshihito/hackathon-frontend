@@ -22,3 +22,17 @@ export const getPersonalizedRecommendations = async (): Promise<ItemSimple[]> =>
   const data = await response.json();
   return data.items || [];
 };
+
+// 指定された商品に似ている関連商品を取得（認証不要）
+export const getSimilarItems = async (itemId: string): Promise<ItemSimple[]> => {
+  const response = await fetch(`${getBaseUrl()}/items/${itemId}/recommend`, {
+    method: "GET",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch similar items");
+  }
+
+  const data = await response.json();
+  return data.items || [];
+};
