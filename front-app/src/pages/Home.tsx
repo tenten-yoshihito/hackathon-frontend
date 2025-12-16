@@ -1,10 +1,7 @@
-// src/pages/Home.tsx
-
-import React, { useEffect, useState, useMemo, useCallback } from "react";
-import { fetchItems, ItemSimple } from "lib/api/item_list";
-import { getLikedItems } from "lib/api/like";
-import { useMyItems } from "hooks/useMyItems";
+import React, { useState, useMemo } from "react";
 import { useLikes } from "hooks/useLikes";
+import { useAuth } from "hooks/useAuth";
+import { useHomeData, TabType } from "hooks/useHomeData";
 import ItemGrid from "components/items/ItemGrid";
 import TabNavigation from "components/common/TabNavigation";
 import styles from "./Home.module.css";
@@ -13,89 +10,14 @@ type StatusFilter = "all" | "on_sale";
 type SortOption = "newest" | "price_low" | "price_high";
 
 const Home: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<"all" | "my" | "liked">("all");
-  const [allItems, setAllItems] = useState<ItemSimple[]>([]);
-  const [likedItems, setLikedItems] = useState<ItemSimple[]>([]);
-  const [loadingAll, setLoadingAll] = useState(true);
-  const [loadingLiked, setLoadingLiked] = useState(false);
-  const [offset, setOffset] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
-  const [loadingMore, setLoadingMore] = useState(false);
+  const [activeTab, setActiveTab] = useState<TabType>("all");
+  const { currentUser } = useAuth();
+  
+  const { displayItems, loading, hasMore, loadMore, loadingMore } = useHomeData(activeTab);
+  const { likedItemIds, toggleLike, checkIsLiked } = useLikes();
+  
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [sortOption, setSortOption] = useState<SortOption>("newest");
-  const { items: myItems, loading: loadingMy } = useMyItems();
-  const { likedItemIds, toggleLike, checkIsLiked } = useLikes();
-
-  // Removed unused useEffect/loadItems block
-
-
-  // Moved functions up to avoid "used before declaration" errors
-  const fetchData = useCallback(async (currentOffset: number) => {
-    try {
-      if (currentOffset === 0) setLoadingAll(true);
-      else setLoadingMore(true);
-
-      const limit = 20;
-      const data = await fetchItems(limit, currentOffset);
-
-      if (data.length < limit) setHasMore(false);
-      
-      setAllItems(prev => currentOffset === 0 ? data : [...prev, ...data]);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoadingAll(false);
-      setLoadingMore(false);
-    }
-  }, []);
-
-  // Initial load is handled by the "Reset logic" useEffect below.
-
-  // Reset logic when tab changes
-  useEffect(() => {
-    if (activeTab === "all") {
-      setOffset(0);
-      setAllItems([]);
-      setHasMore(true);
-      fetchData(0); 
-    }
-  }, [activeTab, fetchData]);
-
-  const handleLoadMore = () => {
-    fetchData(offset + 20); 
-    setOffset(prev => prev + 20);
-  };
-  
-  // Wait, mixing logic in replacement chunk is hard. I'll rewrite the whole block.
-
-
-  // いいねタブが選択されたときにいいね商品を取得
-  useEffect(() => {
-    if (activeTab === "liked") {
-      const loadLikedItems = async () => {
-        try {
-          setLoadingLiked(true);
-          const data = await getLikedItems();
-          setLikedItems(data);
-        } catch (err) {
-          console.error("Failed to load liked items:", err);
-        } finally {
-          setLoadingLiked(false);
-        }
-      };
-
-      loadLikedItems();
-    }
-  }, [activeTab]);
-
-  const displayItems =
-    activeTab === "all" ? allItems : activeTab === "my" ? myItems : likedItems;
-  const loading =
-    activeTab === "all"
-      ? loadingAll
-      : activeTab === "my"
-      ? loadingMy
-      : loadingLiked;
 
   // フィルターとソートを適用
   const filteredAndSortedItems = useMemo(() => {
@@ -194,7 +116,19 @@ const Home: React.FC = () => {
           <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
 
           <main className={styles.mainContent}>
-            {loading ? (
+            {activeTab === "recommend" && !currentUser ? (
+              <div className={styles.loginPromptContainer}>
+                <p className={styles.loginPromptText}>
+                  ログインするとあなたへのおすすめが表示されます
+                </p>
+                <button
+                  className="primary-button"
+                  onClick={() => window.location.href = "/login"}
+                >
+                  ログイン
+                </button>
+              </div>
+            ) : loading ? (
               <p className="center-text">読み込み中...</p>
             ) : (
               <>
@@ -207,10 +141,10 @@ const Home: React.FC = () => {
                 
                 {/* Load More Button for 'all' tab */}
                 {activeTab === "all" && hasMore && (
-                  <div style={{ textAlign: "center", marginTop: "24px" }}>
+                  <div className={styles.loadMoreContainer}>
                     <button 
                       className="secondary-button" 
-                      onClick={handleLoadMore}
+                      onClick={loadMore}
                       disabled={loadingMore}
                     >
                       {loadingMore ? "読み込み中..." : "もっと見る"}

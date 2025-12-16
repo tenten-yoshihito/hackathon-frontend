@@ -16,6 +16,8 @@ import PurchaseModal from "components/items/PurchaseModal";
 import ChatListModal from "components/items/ChatListModal";
 import LikeButton from "components/common/LikeButton";
 
+import RelatedItems from "components/items/RelatedItems";
+
 import styles from "./ItemDetailPage.module.css";
 
 const ItemDetailPage: React.FC = () => {
@@ -79,6 +81,12 @@ const ItemDetailPage: React.FC = () => {
           <div className={styles.spacer} />
         </div>
       </div>
+
+      {/* 関連商品 */}
+      {item && <RelatedItems itemId={item.id} />}
+
+      {/* フッター分の余白 */}
+      <div className={styles.spacer} />
 
       {/* 下: フッター */}
       <ItemDetailFooter
