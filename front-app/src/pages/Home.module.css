@@ -81,3 +81,19 @@
     margin-bottom: 16px;
   }
 }
+
+.loginPromptContainer {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.loginPromptText {
+  margin-bottom: 16px;
+  font-size: 16px;
+  color: var(--text-secondary);
+}
+
+.loadMoreContainer {
+  text-align: center;
+  margin-top: 24px;
+}

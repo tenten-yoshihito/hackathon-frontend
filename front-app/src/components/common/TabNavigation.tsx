@@ -4,8 +4,8 @@ import React from "react";
 import styles from "./TabNavigation.module.css";
 
 interface TabNavigationProps {
-  activeTab: "all" | "my" | "liked";
-  onTabChange: (tab: "all" | "my" | "liked") => void;
+  activeTab: "all" | "my" | "liked" | "recommend";
+  onTabChange: (tab: "all" | "my" | "liked" | "recommend") => void;
 }
 
 const TabNavigation: React.FC<TabNavigationProps> = ({ activeTab, onTabChange }) => {
@@ -28,6 +28,12 @@ const TabNavigation: React.FC<TabNavigationProps> = ({ activeTab, onTabChange })
         onClick={() => onTabChange("liked")}
       >
         いいねした商品
+      </button>
+      <button
+        className={`${styles.tab} ${activeTab === "recommend" ? styles.active : ""}`}
+        onClick={() => onTabChange("recommend")}
+      >
+        おすすめ
       </button>
     </div>
   );
