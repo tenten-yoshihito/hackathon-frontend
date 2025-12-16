@@ -47,8 +47,10 @@ const ItemCreateForm: React.FC<Props> = ({
       />
 
       <div className="form-group">
-        <label className="form-label">商品名</label>
+        <label className="form-label" htmlFor="item-name">商品名</label>
         <input
+          id="item-name"
+          name="name"
           type="text"
           className="form-input"
           value={props.name}
@@ -59,8 +61,10 @@ const ItemCreateForm: React.FC<Props> = ({
       </div>
 
       <div className="form-group">
-        <label className="form-label">価格 (円)</label>
+        <label className="form-label" htmlFor="item-price">価格 (円)</label>
         <input
+          id="item-price"
+          name="price"
           type="number"
           className="form-input"
           value={props.price}
@@ -72,7 +76,7 @@ const ItemCreateForm: React.FC<Props> = ({
 
       <div className="form-group">
         <div className={styles.labelRow}>
-          <label className="form-label">商品の説明 (任意)</label>
+          <label className="form-label" htmlFor="item-description">商品の説明 (任意)</label>
           <button
             type="button"
             onClick={props.handleGenerateDescription}
@@ -83,6 +87,8 @@ const ItemCreateForm: React.FC<Props> = ({
           </button>
         </div>
         <textarea
+          id="item-description"
+          name="description"
           className="form-textarea"
           value={props.description}
           onChange={(e) => props.setDescription(e.target.value)}

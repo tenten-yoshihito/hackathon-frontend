@@ -25,8 +25,10 @@ const SignupForm: React.FC<Props> = ({
       <h2 className="page-title">新規会員登録</h2>
       
       <div className="form-group">
-        <label className="form-label">ニックネーム</label>
+        <label className="form-label" htmlFor="signup-name">ニックネーム</label>
         <input
+          id="signup-name"
+          name="name"
           type="text"
           className="form-input"
           autoComplete="name"
@@ -39,8 +41,10 @@ const SignupForm: React.FC<Props> = ({
       </div>
 
       <div className="form-group">
-        <label className="form-label">メールアドレス</label>
+        <label className="form-label" htmlFor="signup-email">メールアドレス</label>
         <input
+          id="signup-email"
+          name="email"
           type="email"
           className="form-input"
           autoComplete="email"
@@ -53,8 +57,10 @@ const SignupForm: React.FC<Props> = ({
       </div>
 
       <div className="form-group">
-        <label className="form-label">パスワード</label>
+        <label className="form-label" htmlFor="signup-password">パスワード</label>
         <input
+          id="signup-password"
+          name="password"
           type="password"
           className="form-input"
           autoComplete="new-password"

@@ -56,6 +56,7 @@ const Home: React.FC = () => {
             <label className={styles.filterOption}>
               <input
                 type="radio"
+                id="status-all"
                 name="status"
                 value="all"
                 checked={statusFilter === "all"}
@@ -66,6 +67,7 @@ const Home: React.FC = () => {
             <label className={styles.filterOption}>
               <input
                 type="radio"
+                id="status-onsale"
                 name="status"
                 value="on_sale"
                 checked={statusFilter === "on_sale"}
@@ -81,6 +83,7 @@ const Home: React.FC = () => {
             <label className={styles.filterOption}>
               <input
                 type="radio"
+                id="sort-newest"
                 name="sort"
                 value="newest"
                 checked={sortOption === "newest"}
@@ -91,6 +94,7 @@ const Home: React.FC = () => {
             <label className={styles.filterOption}>
               <input
                 type="radio"
+                id="sort-price-low"
                 name="sort"
                 value="price_low"
                 checked={sortOption === "price_low"}
@@ -101,6 +105,7 @@ const Home: React.FC = () => {
             <label className={styles.filterOption}>
               <input
                 type="radio"
+                id="sort-price-high"
                 name="sort"
                 value="price_high"
                 checked={sortOption === "price_high"}
