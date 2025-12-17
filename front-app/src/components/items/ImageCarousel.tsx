@@ -50,6 +50,8 @@ const ImageCarousel: React.FC<Props> = ({ images, alt }) => {
         src={images[currentIndex]}
         alt={`${alt}-${currentIndex}`}
         className={styles.image}
+        loading="lazy"
+        decoding="async"
       />
 
       {images.length > 1 && (
