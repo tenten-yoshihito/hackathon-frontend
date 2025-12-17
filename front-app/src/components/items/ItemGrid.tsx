@@ -48,6 +48,8 @@ const ItemGrid: React.FC<Props> = ({
                   src={item.image_url}
                   alt={item.name}
                   className={styles.image}
+                  loading="lazy"
+                  decoding="async"
                 />
               ) : (
                 <div className={styles.noImage}>No Image</div>
