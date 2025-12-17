@@ -136,6 +136,7 @@ const SearchPage: React.FC = () => {
             <label className={styles.filterOption}>
               <input
                 type="radio"
+                id="search-status-all"
                 name="status"
                 value="all"
                 checked={statusFilter === "all"}
@@ -146,6 +147,7 @@ const SearchPage: React.FC = () => {
             <label className={styles.filterOption}>
               <input
                 type="radio"
+                id="search-status-onsale"
                 name="status"
                 value="on_sale"
                 checked={statusFilter === "on_sale"}
@@ -161,6 +163,7 @@ const SearchPage: React.FC = () => {
             <label className={styles.filterOption}>
               <input
                 type="radio"
+                id="search-sort-newest"
                 name="sort"
                 value="newest"
                 checked={sortOption === "newest"}
@@ -171,6 +174,7 @@ const SearchPage: React.FC = () => {
             <label className={styles.filterOption}>
               <input
                 type="radio"
+                id="search-sort-price-low"
                 name="sort"
                 value="price_low"
                 checked={sortOption === "price_low"}
@@ -181,6 +185,7 @@ const SearchPage: React.FC = () => {
             <label className={styles.filterOption}>
               <input
                 type="radio"
+                id="search-sort-price-high"
                 name="sort"
                 value="price_high"
                 checked={sortOption === "price_high"}

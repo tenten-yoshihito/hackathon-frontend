@@ -58,6 +58,8 @@ const ChatPage: React.FC = () => {
 
         <div className={styles.inputArea}>
           <textarea
+            id="chat-input"
+            name="message"
             className={styles.textarea}
             value={chat.inputText}
             onChange={(e) => chat.setInputText(e.target.value)}

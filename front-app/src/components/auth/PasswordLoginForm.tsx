@@ -20,8 +20,10 @@ const PasswordLoginForm: React.FC<Props> = ({ onSubmit }) => {
   return (
     <form onSubmit={onLoginSubmit}>
       <div className="form-group">
-        <label className="form-label">メールアドレス</label>
+        <label className="form-label" htmlFor="login-email">メールアドレス</label>
         <input
+          id="login-email"
+          name="email"
           type="email"
           className="form-input"
           value={email}
@@ -33,8 +35,10 @@ const PasswordLoginForm: React.FC<Props> = ({ onSubmit }) => {
       </div>
 
       <div className="form-group">
-        <label className="form-label">パスワード</label>
+        <label className="form-label" htmlFor="login-password">パスワード</label>
         <input
+          id="login-password"
+          name="password"
           type="password"
           className="form-input"
           value={password}
