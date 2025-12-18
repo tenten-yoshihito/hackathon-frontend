@@ -89,6 +89,7 @@ export const useAuth = () => {
       alert("ログアウトしました。");
     } catch (err) {
       console.error("ログアウトエラー:", err);
+      alert("ログアウトに失敗しました。もう一度お試しください。");
     }
   };
 
